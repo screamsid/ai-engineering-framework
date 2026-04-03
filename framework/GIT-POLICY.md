@@ -149,6 +149,21 @@ They are part of traceability.
 
 ---
 
+## .gitignore Hygiene
+
+Every project must maintain a strict `.gitignore` file.
+
+You must ensure the following are NEVER tracked by Git:
+
+- passwords, tokens, API keys, or usernames
+- `.env` files or local credentials configurations
+- runtime logs, data dumps, or packet captures
+- data produced from test runs or test outputs
+
+If sensitive data or test outputs are accidentally tracked, they must be purged from the repository history, not just deleted in a subsequent commit.
+
+---
+
 ## Prohibited Patterns
 
 Do not:

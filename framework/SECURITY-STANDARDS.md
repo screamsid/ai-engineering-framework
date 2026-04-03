@@ -28,6 +28,8 @@ description: Mandatory security review for:
 - Minimise sensitive data exposure.
 - Use redaction where needed.
 - Do not log secrets or private tokens.
+- **Never publish passwords, usernames, test run outputs, or `.env` files into source control.**
+- Ensure strict `.gitignore` configuration before committing code.
 
 ## Security review triggers
 Mandatory security review for:

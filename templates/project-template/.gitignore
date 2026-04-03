@@ -1,0 +1,22 @@
+# Security & Credentials
+.env
+.env.*
+*.pem
+*.key
+credentials/
+secrets/
+config/local.json
+
+# Test data & outputs
+test-results/
+coverage/
+*.log
+*.out
+tmp/
+temp/
+__pycache__/
+*.sqlite3
+
+# OS generated files
+.DS_Store
+Thumbs.db
