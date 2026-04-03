@@ -64,7 +64,7 @@ Work should be broken into small, reviewable, reversible steps.
 Existing modules, patterns, and docs should be checked before creating something new.
 
 ### Security is first class
-Security must be part of planning, implementation, review, and release.
+Security must be part of planning, implementation, review, and release. Passwords, usernames, environments, and test outputs must never be published to source control.
 
 ### Validation is mandatory
 Every meaningful change must be tested at a level proportionate to risk.
@@ -272,8 +272,9 @@ For this project, you must strictly follow the AI Engineering Framework:
 ```
 
 ### 3. Copy the Project Templates
-At minimum, copy the local project templates into your target repo:
+At minimum, copy the local project templates into your target repo to set up your framework foundation:
 
+- `.gitignore` (blocks sensitive data, test dumps, credentials)
 - `PROJECT-PROFILE.md`
 - `WORKING-CONTEXT.md`
 - `BACKLOG.md`
