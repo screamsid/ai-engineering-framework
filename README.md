@@ -244,22 +244,41 @@ Shared standards for engineering, testing, security, and release raise the basel
 
 ## How to Use This Framework
 
-### 1. Use this repo as the source of truth
-Keep reusable engineering rules, workflows, and role definitions here.
+Because this framework uses standard YAML frontmatter for all core rules, workflows, and modes, modern agentic IDEs (Cursor, Claude Code, GitHub Copilot Workspace, etc.) natively ingest these files as "Skills" or "Rules." 
 
-### 2. Choose an operating mode
+Here is how to seamlessly inject this operating model into any target project:
+
+### 1. Add as a Submodule (Recommended)
+Add this repository as a submodule into your new project's `.agents/` or `.cursor/` directory. This ensures the semantic indexer automatically loads all rules and constraints:
+
+```bash
+git submodule add -b main <your-framework-repo-url> .agents/ai-engineering-framework
+```
+
+### 2. Set Global Agent Rules
+To enforce the framework passively across an entire project, reference it in your `.cursorrules` or `.claudecode` file within your project root:
+
+```markdown
+# Agent Instructions
+For this project, you must strictly follow the AI Engineering Framework:
+- Start all tasks by cross-referencing `.agents/ai-engineering-framework/framework/WORKFLOW.md`
+- Always act in the `builder` role when coding: `.agents/ai-engineering-framework/roles/builder.md`
+- Assume you are operating under `.agents/ai-engineering-framework/modes/standard.md`.
+```
+
+### 3. Copy the Project Templates
+At minimum, copy the local project templates into your target repo:
+
+- `PROJECT-PROFILE.md`
+- `WORKING-CONTEXT.md`
+- `BACKLOG.md`
+- `AUDIT-LOG.md`
+
+### 4. Choose an Operating Mode
 Select lean, standard, or full based on project risk and complexity.
 
-### 3. Choose a project preset if useful
+### 5. Choose a Project Preset if useful
 Use a preset that matches the project type, then tailor it.
-
-### 4. Copy the project templates into the target repo
-At minimum:
-
-- PROJECT-PROFILE.md
-- WORKING-CONTEXT.md
-- BACKLOG.md
-- AUDIT-LOG.md
 
 ### 5. Define the project overlay
 Fill in project-specific details such as:
