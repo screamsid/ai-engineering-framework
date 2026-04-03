@@ -1,77 +1,363 @@
 # AI Engineering Framework
 
-A reusable engineering operating model for AI-assisted delivery teams.
+A reusable operating model for AI-assisted and multi-agent software delivery.
 
-This repository is the source of truth for how agent-driven engineering work should be planned, implemented, reviewed, secured, tested, and handed off across projects.
+This repository is the source of truth for how projects should be planned, built, reviewed, secured, tested, handed over, and improved when using AI agents in engineering workflows.
 
-## Design philosophy
+It is designed to be reused across multiple project types and refined over time, so teams do not need to rebuild process, standards, or working patterns for every new repo.
 
-This framework prioritises:
+## Why This Exists
 
-- clarity over cleverness
-- structure over speed
-- safety over shortcuts
-- reuse over reinvention
-- small reversible changes over big risky ones
+Without structure, AI-assisted delivery tends to:
 
-It is intentionally opinionated to reduce ambiguity and improve consistency across projects.
+- repeat the same setup in every session
+- forget working practices unless reminded
+- mix planning, implementation, and review into one pass
+- make hidden assumptions
+- drift from agreed standards
+- produce weak handoffs
+- create large hard-to-review changes
+- lose useful project memory between sessions
 
-## What this repo contains
+This framework exists to reduce that.
 
-- `framework/` core rules, workflow, standards, and templates
-- `roles/` role instructions for the engineering team
-- `templates/` project bootstrap files
-- `modes/` lean, standard, and full operating modes
-- `presets/` project-type defaults
-- `examples/` example layouts and usage
-- `docs/` guidance for adoption and extension
+It moves stable engineering guidance out of temporary chat context and into a reusable, versioned framework that can be applied across projects.
 
-## Recommended usage
+The goal is simple:
 
-1. Pick an operating mode from `modes/`
-2. Pick a project preset from `presets/`
-3. Copy the project template from `templates/project-template/` into the target repo
-4. Fill in `PROJECT-PROFILE.md` and `WORKING-CONTEXT.md`
-5. Run work through the defined agent workflow
+- more consistency
+- better handoffs
+- stronger review and rollback
+- less repeated instruction
+- lower context waste
+- safer delivery
 
-## Core principles
+## What This Framework Is
 
-1. Plan before action
-2. No hidden assumptions
-3. Small, reversible changes
-4. Reuse before rebuild
-5. Security by default
-6. Test before handoff
-7. Log meaningful changes
-8. Keep backlog separate from in-scope work
-9. Keep handoffs explicit
-10. Prefer simple, maintainable solutions
+This is not just a prompt library.
 
-## Suggested adoption flow
+It is a reusable engineering framework made up of:
 
-### For a new project
+- core rules
+- workflow definitions
+- role instructions
+- engineering, security, git, and testing standards
+- project templates
+- operating modes
+- project presets
+- examples and guidance
 
-- copy the project template
-- apply a preset
-- choose an operating mode
-- update the project profile
-- start with the first story using the planner role
+Together, these create a structured operating model that can be applied to real projects and improved over time.
 
-### For an existing project
+## Core Principles
 
-- add the project template files
-- map the current architecture and constraints
-- decide the minimum sensible operating mode
-- introduce the workflow gradually rather than all at once
+### Plan before action
+No meaningful implementation should begin until the task is understood and a plan exists.
+
+### No hidden assumptions
+If something is unclear, the gap must be identified explicitly.
+
+### Small safe changes
+Work should be broken into small, reviewable, reversible steps.
+
+### Reuse before rebuild
+Existing modules, patterns, and docs should be checked before creating something new.
+
+### Security is first class
+Security must be part of planning, implementation, review, and release.
+
+### Validation is mandatory
+Every meaningful change must be tested at a level proportionate to risk.
+
+### New ideas go to the backlog
+Out-of-scope ideas should be captured, not silently folded into current delivery.
+
+### Handoffs must be explicit
+If work is passed on, the current state must be clear.
+
+### Git should protect rollback
+Small commits, clean history, and tagging support safe change management.
+
+### The framework is a product
+This repo should evolve deliberately, be versioned properly, and improve with use.
+
+## Framework Layers
+
+This framework separates information into layers so agents do not have to relearn the wheel every session.
+
+### 1. Core framework
+Stable rules that apply across most projects.
+
+Examples:
+- core rules
+- workflow
+- git policy
+- security standards
+- testing standards
+- definition of done
+
+### 2. Project profile
+Project-specific overlay information.
+
+Examples:
+- project type
+- languages and frameworks
+- deployment model
+- branch naming
+- testing expectations
+- security sensitivity
+- architecture constraints
+
+### 3. Working context
+Short-lived operational memory for the current state of a project.
+
+Examples:
+- current story
+- active branch
+- priorities
+- open risks
+- blockers
+- latest meaningful change
+- recommended next step
+
+This layered model reduces repeated setup, improves continuity, and keeps active context focused on current work.
+
+## Multi-Agent Model
+
+This framework supports role separation so planning, implementation, review, security checking, git hygiene, and release readiness do not collapse into one vague blob.
+
+Default team roles:
+
+- Planner
+- Builder
+- Reviewer
+- Security Reviewer
+- Git Manager
+- Release Manager
+
+Not every project needs every role every time, which is why the framework also supports operating modes.
+
+## Operating Modes
+
+### Lean
+For smaller scripts, prototypes, and lower-risk work.
+
+Typical roles:
+- Planner
+- Builder
+- Reviewer
+
+### Standard
+For most internal tools, automation, services, and engineering projects.
+
+Typical roles:
+- Planner
+- Builder
+- Reviewer
+- Security Reviewer
+- Git Manager
+
+### Full
+For higher-risk, externally exposed, production-critical, or more formal delivery workflows.
+
+Typical roles:
+- Planner
+- Builder
+- Reviewer
+- Security Reviewer
+- Git Manager
+- Release Manager
+
+The point of modes is to keep the framework strong without overloading smaller projects.
+
+## Project Presets
+
+To make adoption easier, the framework is intended to support reusable presets for common project types, such as:
+
+- Python automation
+- web app
+- API service
+- infrastructure automation
+- security tool
+- data tool
+
+A preset provides sensible defaults that can then be tailored in the project profile.
+
+## What It Solves
+
+### Repeated context setup
+Stable guidance lives here instead of being re-explained in every session.
+
+### Weak project memory
+Project profile, working context, backlog, and audit structures preserve useful state outside the active context window.
+
+### Unclear handoffs
+Structured roles and handoff patterns reduce hidden context.
+
+### Scope drift
+Backlog discipline and role separation stop current work being derailed by new ideas.
+
+### Poor traceability
+Git discipline, audit logging, and clear workflows improve reviewability and rollback readiness.
+
+### Inconsistent quality
+Shared standards for engineering, testing, security, and release raise the baseline across projects.
+
+## Repository Structure
+
+    .
+    ├── README.md
+    ├── VERSION.md
+    ├── framework/
+    │   ├── AGENTS.md
+    │   ├── CORE-RULES.md
+    │   ├── WORKFLOW.md
+    │   ├── ENGINEERING-STANDARDS.md
+    │   ├── SECURITY-STANDARDS.md
+    │   ├── GIT-POLICY.md
+    │   ├── TESTING-STANDARDS.md
+    │   └── DEFINITION-OF-DONE.md
+    ├── roles/
+    │   ├── planner.md
+    │   ├── builder.md
+    │   ├── reviewer.md
+    │   ├── security-reviewer.md
+    │   ├── git-manager.md
+    │   └── release-manager.md
+    ├── templates/
+    │   ├── STORY-TEMPLATE.md
+    │   ├── HANDOFF-TEMPLATE.md
+    │   ├── PROJECT-PROFILE.md
+    │   ├── WORKING-CONTEXT.md
+    │   ├── BACKLOG.md
+    │   └── AUDIT-LOG.md
+    ├── modes/
+    │   ├── lean.md
+    │   ├── standard.md
+    │   └── full.md
+    ├── presets/
+    │   ├── python-automation.md
+    │   ├── web-app.md
+    │   ├── infra-automation.md
+    │   └── security-tool.md
+    └── examples/
+
+## How to Use This Framework
+
+### 1. Use this repo as the source of truth
+Keep reusable engineering rules, workflows, and role definitions here.
+
+### 2. Choose an operating mode
+Select lean, standard, or full based on project risk and complexity.
+
+### 3. Choose a project preset if useful
+Use a preset that matches the project type, then tailor it.
+
+### 4. Copy the project templates into the target repo
+At minimum:
+
+- PROJECT-PROFILE.md
+- WORKING-CONTEXT.md
+- BACKLOG.md
+- AUDIT-LOG.md
+
+### 5. Define the project overlay
+Fill in project-specific details such as:
+
+- technical stack
+- branch naming
+- testing expectations
+- architecture constraints
+- security sensitivity
+- release and tagging expectations
+
+### 6. Work story by story
+Use the framework to drive:
+- story review
+- planning
+- implementation
+- validation
+- review
+- security review where required
+- git checks
+- release readiness
+
+### 7. Feed reusable improvements back into this repo
+If a lesson is repeatable, improve the framework here instead of patching each project differently.
+
+## Recommended Adoption Pattern
+
+A practical pattern for most teams:
+
+1. keep this repo as the master framework
+2. use project templates in each working repo
+3. keep project-specific customisation in the project profile
+4. keep current state in working context
+5. keep new ideas in backlog
+6. keep meaningful changes in audit log
+7. feed repeatable improvements back into this framework repo
+
+## What Good Looks Like
+
+Used properly, this framework should give you:
+
+- fewer repeated instructions
+- better continuity between sessions
+- less context window waste
+- cleaner story intake and planning
+- smaller safer changes
+- clearer handoffs
+- better git hygiene
+- stronger review and rollback discipline
+- more reliable security and testing practices
+- easier reuse across future projects
+
+## Maintaining This Repository
+
+Treat this repository like a real product, not a dumping ground.
+
+Framework changes should be:
+
+- deliberate
+- reviewable
+- documented
+- versioned
+- tagged where appropriate
+
+Avoid:
+
+- silent behavioural changes
+- project-specific clutter in core files
+- vague AI philosophy
+- process that adds drag without adding value
+
+Keep it sharp. Keep it useful. Trim the fat.
 
 ## Versioning
 
-This framework should be versioned like software.
+Suggested approach:
 
-- update `VERSION.md` when behaviour or structure changes
-- tag meaningful versions
-- keep framework changes reviewable and documented
+- `v0.x` while shaping the model
+- `v1.0.0` once the core framework is stable and reusable across projects
+- bump versions for meaningful changes
+- document changes in `VERSION.md`
+- use git tags for framework releases
 
-## Source of truth rule
+## Current Direction
 
-If a project discovers an improvement to the framework, that improvement should be fed back into this repository rather than left as local drift.
+Short-term priorities:
+
+- fully populate core framework files
+- refine role instructions
+- define operating modes clearly
+- build out project presets
+- test adoption in active projects
+- feed lessons back into the framework
+
+## Final Note
+
+This framework should make engineering work easier, clearer, and safer.
+
+If it becomes bloated, ceremonial, or harder to use than the problem it solves, simplify it.
+
+The framework exists to support delivery, not to become the delivery.
