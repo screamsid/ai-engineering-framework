@@ -1,41 +1,170 @@
 # Core Rules
 
-These rules apply to every role and every task.
+These rules apply to all roles, all stories, and all projects using this framework.
+
+They are non-negotiable unless explicitly overridden in a project profile.
 
 ## 1. Plan before action
-No code or file changes may be made until the work has been understood and a plan has been produced.
+No code, configuration, or file changes should be made until the task is understood and a plan exists.
 
-## 2. No assumptions
-If requirements, scope, or intent are unclear, the gap must be stated explicitly.
-Where possible, propose the most likely interpretation and explain the risk.
+A quick plan is acceptable.  
+No plan is not acceptable.
 
-## 3. Small safe steps
-Work in small, reversible increments.
-Prefer several focused changes over one large mixed change.
+## 2. No hidden assumptions
+Do not silently fill gaps in requirements, scope, architecture, or intent.
 
-## 4. Reuse before rebuild
-Check existing code, modules, scripts, and documentation before creating something new.
+If something is unclear:
+- identify the gap
+- state the likely interpretation if needed
+- state the risk of proceeding
 
-## 5. Keep changes minimal
-Change only what is necessary to complete the story safely.
+## 3. Work in small, safe steps
+Changes must be:
+- small
+- reviewable
+- reversible
 
-## 6. Security by default
-Follow secure coding principles, least privilege, safe secret handling, and dependency awareness.
+Avoid large, mixed, or difficult-to-rollback changes.
 
-## 7. Test before handoff
-Every implementation change must be validated with smoke tests at a minimum.
+## 4. Keep scope tight
+Only implement what is required for the current story.
 
-## 8. Log what changed
-Every meaningful change must update the audit log with the story reference, files changed, summary, risks, and validation performed.
+Do not include:
+- opportunistic refactors
+- unrelated fixes
+- new ideas discovered during implementation
 
-## 9. Backlog discipline
-Ideas discovered during execution must be added to the backlog rather than merged into the current story unless explicitly in scope.
+## 5. New ideas go to the backlog
+Any improvement, idea, or discovery outside scope must be:
+- recorded in the backlog
+- not silently included in the current work
 
-## 10. Handoff clarity
-Every handoff must include the current state, what changed, validation status, known risks, and the recommended next step.
+## 6. Reuse before rebuild
+Before creating new code or structure, check for:
+- existing modules
+- shared utilities
+- established patterns
+- documented approaches
 
-## 11. Simplicity wins
-Prefer readable, maintainable, boring solutions over clever ones.
+Do not rebuild something that already exists without reason.
 
-## 12. Stop on unsafe changes
-If the requested path creates material security, stability, compliance, or data-loss risk, stop and flag it clearly.
+## 7. Security is mandatory
+All work must consider:
+- least privilege
+- safe handling of secrets
+- input validation
+- dependency risk
+- logging safety
+- data exposure
+
+Security is not optional where risk exists.
+
+## 8. Validation is mandatory
+Every meaningful change must be validated.
+
+At minimum:
+- smoke testing is required
+
+Where risk is higher:
+- deeper testing is required
+
+## 9. Audit all meaningful changes
+Every meaningful change must be recorded in the audit log.
+
+Include:
+- what changed
+- why it changed
+- files affected
+- risks considered
+- validation performed
+
+## 10. Git discipline is required
+All changes must follow git standards:
+
+- small commits
+- clear commit messages explaining why
+- one logical change per commit where possible
+- no large “catch-all” commits
+
+## 11. Protect rollback
+All changes must be easy to:
+- understand
+- isolate
+- revert
+
+If rollback would be difficult, the change is too large or unclear.
+
+## 12. Handoffs must be explicit
+When handing work over, include:
+
+- current state
+- what changed
+- what was validated
+- known risks
+- what remains
+- next recommended step
+
+Do not rely on implied understanding.
+
+## 13. Update working context
+Where relevant, update working context so future work does not need to reconstruct state.
+
+## 14. Surface risk early
+If a path introduces material risk:
+- call it out immediately
+- do not bury it
+- do not proceed silently
+
+## 15. Simplicity over cleverness
+Prefer solutions that are:
+- clear
+- maintainable
+- predictable
+
+Avoid unnecessary complexity.
+
+## 16. Do not proceed on unclear stories
+Before starting, the story must be reviewed.
+
+If the story:
+- lacks clarity
+- is missing acceptance criteria
+- has undefined scope
+
+Then:
+- identify the gaps
+- do not proceed blindly
+
+## 17. Separate responsibilities
+Planning, implementation, review, and validation should not collapse into a single step.
+
+Respect role boundaries.
+
+## 18. Completion means fully complete
+A story is not complete until:
+
+- requirements are met
+- validation is complete
+- audit log is updated
+- review is complete
+- security review is complete where required
+
+Partial completion is not completion.
+
+## 19. No silent behaviour changes
+All meaningful changes must be:
+- visible
+- traceable
+- explained
+
+Hidden behaviour changes are not acceptable.
+
+## 20. The framework must be followed
+These rules exist to:
+
+- reduce inconsistency
+- improve quality
+- reduce risk
+- improve reuse
+
+If they are ignored, the system degrades quickly.
