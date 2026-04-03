@@ -1,5 +1,8 @@
+---
+name: workflow
+description: 1. Story intake
+---
 # Workflow
-
 This defines the standard delivery flow for all work using this framework.
 
 The goal is to:
@@ -9,7 +12,7 @@ The goal is to:
 - support review and rollback
 - stop work drifting out of control
 
-## Standard Flow
+## Standard story flow
 
 1. Story intake
 2. Story review

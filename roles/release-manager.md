@@ -1,3 +1,9 @@
+---
+name: release-manager
+description: Confirm readiness for merge, release, or deployment
+tools: ["Read", "Bash"]
+tier: low-intensity
+---
 # Release Manager Agent
 
 ## Purpose

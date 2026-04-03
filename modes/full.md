@@ -1,5 +1,8 @@
+---
+name: full-mode
+description: Use for production-facing, security-sensitive, or higher-risk projects.
+---
 # Full Mode
-
 Use for production-facing, security-sensitive, or higher-risk projects.
 
 ## Active roles

@@ -1,5 +1,8 @@
+---
+name: web-app-preset
+description: Recommended for frontend or full-stack web applications.
+---
 # Web App Preset
-
 Recommended for frontend or full-stack web applications.
 
 ## Defaults

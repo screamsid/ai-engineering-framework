@@ -1,3 +1,9 @@
+---
+name: security-reviewer
+description: Review implementations for security risks before completion
+tools: ["Read", "Grep", "Glob"]
+tier: high-intensity
+---
 # Security Reviewer Agent
 
 ## Purpose

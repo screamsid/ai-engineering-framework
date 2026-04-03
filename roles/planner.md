@@ -1,3 +1,9 @@
+---
+name: planner
+description: Turn stories into safe, executable implementation plans
+tools: ["Read", "Grep", "Glob"]
+tier: high-intensity
+---
 # Planner Agent
 
 ## Purpose

@@ -1,3 +1,7 @@
+---
+name: infrastructure-automation-preset
+description: Recommended for infrastructure-as-code, network automation, platform scripts, and change orchestration.
+---
 # Infrastructure Automation Preset
 
 Recommended for infrastructure-as-code, network automation, platform scripts, and change orchestration.

@@ -1,31 +1,191 @@
+---
+name: git-policy
+description: This defines the required git discipline for all work using this framework.
+---
 # Git Policy
 
+This defines the required git discipline for all work using this framework.
+
+The goal is to ensure:
+
+- traceability
+- reviewability
+- rollback safety
+- clear history
+- consistent delivery
+
+---
+
+## Core Principles
+
+Git history must:
+
+- explain what changed
+- explain why it changed
+- support safe rollback
+- support review without guesswork
+
+If the history is unclear, the work is not complete.
+
+---
+
 ## Branching
-- One story per branch.
-- Branch names should be descriptive and traceable.
+
+- one story or change stream per branch
+- no mixing unrelated work in a branch
+
+### Branch Naming
+
+Branches must be:
+
+- descriptive
+- traceable to the story or task
+- consistent
+
+### Example Patterns
+
+- feature/story-012-add-rate-parser
+- fix/story-019-harden-auth-check
+- chore/story-021-update-framework-docs
+
+Project-specific rules can be defined in the project profile.
+
+---
 
 ## Commits
-- Small, focused commits only.
-- Commit messages must explain why the change was made, not just what changed.
-- Do not mix unrelated changes in one commit.
+
+Commits must be:
+
+- small
+- focused
+- logically grouped
+- easy to review
+
+### Rules
+
+- one logical change per commit where possible
+- do not bundle unrelated changes
+- do not create large “catch-all” commits
+
+---
+
+## Commit Messages
+
+Commit messages must explain:
+
+- why the change was made
+- not just what changed
+
+### Good Example
+
+"Add validation for API response to prevent null rate parsing failure"
+
+### Bad Example
+
+"Fix stuff"
+
+---
+
+## Commit Frequency
+
+Prefer:
+
+- multiple small commits
+
+Avoid:
+
+- one large commit at the end of work
+
+Small commits improve:
+- review
+- rollback
+- traceability
+
+---
+
+## Rollback Safety
+
+All changes must be:
+
+- easy to isolate
+- easy to revert
+
+If rollback would be difficult:
+- the change is too large
+- or not properly structured
+
+---
 
 ## Tags
-- Use tags for meaningful milestones, releases, or recovery points.
-- Tag names should be consistent and traceable.
 
-## Rollback readiness
-- Changes must be reversible.
-- Avoid sprawling, unstructured commits that make rollback difficult.
+Tags must be used for:
 
-## Pull request expectations
-- summary
+- framework versions
+- release points
+- significant milestones
+- safe rollback checkpoints (where needed)
+
+### Tag Rules
+
+- tags must be meaningful
+- tags must be consistent
+- tags must align with versioning strategy
+
+---
+
+## Pull Requests (if used)
+
+Pull requests must include:
+
+- summary of change
 - scope
 - risks
-- validation
-- security notes
-- rollback notes
+- validation performed
+- security considerations (if relevant)
+- rollback considerations
 
-## Prohibited
-- direct commits to protected branches
-- massive misc fixes commits
-- bundling backlog items into in-scope story work
+Pull requests are not just a formality.  
+They are part of traceability.
+
+---
+
+## Prohibited Patterns
+
+Do not:
+
+- commit directly to protected branches
+- create vague commit messages
+- bundle unrelated changes together
+- skip commits and push large change sets
+- introduce silent behavioural changes
+- bypass review for convenience
+
+---
+
+## Audit Alignment
+
+Git history must align with the audit log.
+
+For meaningful changes:
+
+- commits should be traceable to audit entries
+- audit entries should reference commits where possible
+
+---
+
+## Working Rule
+
+If someone cannot understand the change by reading the git history:
+
+- the git history is not good enough
+
+---
+
+## Enforcement
+
+If git standards are not met:
+
+- the work is not ready
+- changes must be restructured before completion
+
+Git discipline is not optional. It is required for safe delivery.

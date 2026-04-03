@@ -1,3 +1,7 @@
+---
+name: audit-log-template
+description: Standard file for audit-log-template
+---
 # Audit Log Template
 
 ## Entry Template

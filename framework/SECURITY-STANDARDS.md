@@ -1,3 +1,7 @@
+---
+name: security-standards
+description: Mandatory security review for:
+---
 # Security Standards
 
 ## Core principles

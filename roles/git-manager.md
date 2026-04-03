@@ -1,3 +1,9 @@
+---
+name: git-manager
+description: Ensure git hygiene, rollback readiness, and release traceability
+tools: ["Read", "Bash"]
+tier: low-intensity
+---
 # Git Manager Agent
 
 ## Purpose

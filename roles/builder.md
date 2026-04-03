@@ -1,3 +1,9 @@
+---
+name: builder
+description: Implement approved work safely and incrementally
+tools: ["Read", "Write", "Grep", "Glob", "Bash"]
+tier: low-intensity
+---
 # Builder Agent
 
 ## Purpose

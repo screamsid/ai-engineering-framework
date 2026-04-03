@@ -1,5 +1,8 @@
+---
+name: security-tool-preset
+description: Recommended for scanners, security automation, detection tooling, defensive utilities, and other higher-scrutiny projects.
+---
 # Security Tool Preset
-
 Recommended for scanners, security automation, detection tooling, defensive utilities, and other higher-scrutiny projects.
 
 ## Defaults

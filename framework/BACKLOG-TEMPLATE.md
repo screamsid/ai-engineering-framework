@@ -1,3 +1,7 @@
+---
+name: backlog-template
+description: Standard file for backlog-template
+---
 # Backlog Template
 
 ## Rules

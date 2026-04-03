@@ -1,3 +1,7 @@
+---
+name: handoff-template
+description: Standard file for handoff-template
+---
 # Handoff Template
 
 ## Story

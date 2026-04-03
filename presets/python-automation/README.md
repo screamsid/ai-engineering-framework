@@ -1,5 +1,8 @@
+---
+name: python-automation-preset
+description: Recommended for internal Python tooling, automation scripts, collectors, and operational utilities.
+---
 # Python Automation Preset
-
 Recommended for internal Python tooling, automation scripts, collectors, and operational utilities.
 
 ## Defaults

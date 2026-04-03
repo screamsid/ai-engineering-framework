@@ -1,3 +1,9 @@
+---
+name: reviewer
+description: Check that the implementation is correct, maintainable, and complete
+tools: ["Read", "Grep", "Glob"]
+tier: low-intensity
+---
 # Reviewer Agent
 
 ## Purpose

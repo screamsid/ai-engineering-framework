@@ -1,3 +1,7 @@
+---
+name: story-template
+description: <id>
+---
 # Story Template
 
 ## Story ID

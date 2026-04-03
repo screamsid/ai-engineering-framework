@@ -1,5 +1,8 @@
+---
+name: standard-mode
+description: Use for most internal software and automation projects.
+---
 # Standard Mode
-
 Use for most internal software and automation projects.
 
 ## Active roles

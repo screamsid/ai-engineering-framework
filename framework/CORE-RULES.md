@@ -1,3 +1,7 @@
+---
+name: core-rules
+description: These rules apply to every role and every task.
+---
 # Core Rules
 
 These rules apply to all roles, all stories, and all projects using this framework.
