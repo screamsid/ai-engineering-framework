@@ -124,16 +124,21 @@ This layered model reduces repeated setup, improves continuity, and keeps active
 
 ## Multi-Agent Model
 
-This framework supports role separation so planning, implementation, review, security checking, git hygiene, and release readiness do not collapse into one vague blob.
+This framework supports role separation so planning, implementation, review, security checking, git hygiene, and release readiness do not collapse into one vague blob. 
 
-Default team roles:
+### Multi-Vendor Capability Tiering
+To support seamless switching between providers (Anthropic, OpenAI, Google) and maintain strict cost/performance controls, this framework abandons hardcoded model names in favor of abstract **Capability Tiers**:
+- **`high-intensity`**: Deep reasoning, planning, and security audits (e.g. Claude 4.6 Opus, GPT-5.4 Pro)
+- **`low-intensity`**: Narrow logic, git operations, and scoped implementation (e.g. Claude 4.6 Sonnet, GPT-5.4 Mini)
 
-- Planner
-- Builder
-- Reviewer
-- Security Reviewer
-- Git Manager
-- Release Manager
+Default team roles and their minimum required tiers:
+
+- Planner (`high-intensity`)
+- Builder (`low-intensity`)
+- Reviewer (`low-intensity`)
+- Security Reviewer (`high-intensity`)
+- Git Manager (`low-intensity`)
+- Release Manager (`low-intensity`)
 
 Not every project needs every role every time, which is why the framework also supports operating modes.
 
