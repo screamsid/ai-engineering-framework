@@ -1,0 +1,53 @@
+framework_call:
+  task: string
+  role: string
+  risk: low|medium|high|critical
+
+  required_rules:
+    - string
+
+  required_skills:
+    - string
+
+  required_outputs:
+    - string
+
+  confidence_threshold: integer
+
+  stop_conditions:
+    - string
+
+  escalation:
+    human_validation_required: boolean
+
+example:
+  framework_call:
+    task: "Implement logging improvements"
+    role: "builder"
+    risk: "medium"
+
+    required_rules:
+      - "core-rules"
+      - "confidence-gates"
+      - "agent-adherence"
+      - "testing-standards"
+
+    required_skills:
+      - "secure-coding"
+      - "smoke-testing"
+
+    required_outputs:
+      - "implementation_summary"
+      - "validation_summary"
+      - "confidence_gate"
+      - "known_gaps"
+      - "handoff"
+
+    confidence_threshold: 90
+
+    stop_conditions:
+      - "missing_acceptance_criteria"
+      - "unresolved_security_risk"
+
+    escalation:
+      human_validation_required: true
