@@ -1,0 +1,27 @@
+output_validation:
+  required_sections:
+    - implementation_summary
+    - validation_summary
+    - confidence_gate
+    - known_gaps
+    - handoff
+
+  fail_if_missing:
+    confidence_gate: true
+    validation_summary: true
+    handoff: true
+
+  warning_if_missing:
+    known_gaps: true
+
+  confidence_rules:
+    require_risk_level: true
+    require_evidence: true
+    require_decision: true
+
+  escalation_rules:
+    below_threshold_requires_human_validation: true
+    critical_risk_requires_human_validation: true
+
+  security_rules:
+    high_risk_requires_security_review: true
