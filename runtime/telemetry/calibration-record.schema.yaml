@@ -1,0 +1,27 @@
+calibration_record:
+  timestamp: datetime
+  role: string
+  task_type: string
+  risk_level: low|medium|high|critical
+
+  original_confidence:
+    score: integer
+    rationale: string
+
+  validation:
+    human_validation_required: boolean
+    human_decision: approved|rejected|corrected|deferred
+
+  outcome:
+    validation_result: passed|failed|partial
+    rollback_required: boolean
+    incident_detected: boolean
+
+  calibration:
+    trust_adjustment: increase|decrease|none
+    lessons_identified:
+      - string
+
+  memory:
+    candidate_generated: boolean
+    promotion_recommended: boolean
