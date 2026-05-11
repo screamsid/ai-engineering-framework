@@ -1,0 +1,80 @@
+rule_card_schema:
+  type: object
+  required:
+    - role
+    - purpose
+    - must_follow
+    - required_outputs
+    - required_skills
+    - must_not
+    - stop_conditions
+    - confidence
+    - escalation
+
+  fields:
+    role:
+      type: string
+      description: Agent role this card applies to.
+
+    purpose:
+      type: list[string]
+      description: What this role exists to do.
+
+    must_follow:
+      type: list[string]
+      description: Framework documents, rules, or standards this role must follow.
+
+    required_outputs:
+      type: list[string]
+      description: Output sections required before handoff.
+
+    required_skills:
+      type: list[string]
+      description: Skill packs expected for this role.
+
+    must_not:
+      type: list[string]
+      description: Explicit prohibited behaviours.
+
+    stop_conditions:
+      type: list[string]
+      description: Conditions that require pause, escalation, or human validation.
+
+    confidence:
+      type: object
+      description: Minimum confidence thresholds by risk level.
+
+    escalation:
+      type: object
+      description: Human validation and escalation rules.
+
+example:
+  role_card:
+    role: builder
+    purpose:
+      - implement approved work safely
+    must_follow:
+      - core-rules
+      - confidence-gates
+    required_outputs:
+      - implementation_summary
+      - validation_summary
+      - confidence_gate
+      - known_gaps
+      - handoff
+    required_skills:
+      - secure-coding
+      - smoke-testing
+    must_not:
+      - expand_scope
+      - skip_validation
+    stop_conditions:
+      - missing_acceptance_criteria
+      - confidence_below_threshold
+    confidence:
+      minimum_autonomous_score:
+        low: 85
+        medium: 90
+        high: 95
+    escalation:
+      require_human_validation_below_threshold: true
