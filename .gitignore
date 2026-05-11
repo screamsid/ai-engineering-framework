@@ -1,0 +1,42 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# IDEs
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Runtime
+runtime_state/
+telemetry/
+calibration/
+
+# Secrets
+.env
+.env.*
+*.pem
+*.key
+*.crt
+secrets/
+
+# Build
+build/
+dist/
+*.egg-info/
