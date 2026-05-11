@@ -1,0 +1,39 @@
+canonical_output:
+  metadata:
+    role: string
+    task_type: string
+    risk_level: low|medium|high|critical
+    timestamp: datetime
+
+  execution:
+    summary: string
+    changed_components:
+      - string
+    validation_performed:
+      - string
+    validation_not_performed:
+      - string
+
+  findings:
+    risks:
+      - string
+    known_gaps:
+      - string
+    blockers:
+      - string
+
+  confidence_gate:
+    score: integer
+    rationale: string
+    human_validation_required: boolean
+    escalation_reason: string
+
+  handoff:
+    next_role: string
+    next_action: string
+    rollback_notes: string
+
+  calibration:
+    memory_candidate: boolean
+    lessons_identified:
+      - string
