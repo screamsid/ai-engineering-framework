@@ -1,0 +1,9 @@
+task:
+  id: STORY-001
+  type: python-automation
+  objective: Build inventory summary CLI
+
+runtime:
+  role: builder
+  risk_level: low
+  confidence_score: 92
