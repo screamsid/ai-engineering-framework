@@ -7,6 +7,15 @@ class ConfidenceGate:
         risk_level: str,
         thresholds: dict,
     ) -> dict:
+        if risk_level == "critical":
+            return {
+                "approved": False,
+                "confidence_score": confidence_score,
+                "required_score": "human-review-required",
+                "risk_level": risk_level,
+                "human_validation_required": True,
+            }
+
         required_score = thresholds.get(risk_level)
 
         if required_score is None:
