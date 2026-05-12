@@ -11,15 +11,16 @@ from runtime.audit.audit_logger import AuditLogger
 from runtime.calibration.calibration_engine import CalibrationEngine
 from runtime.calibration.store import CalibrationStore
 from runtime.router.router import RuntimeRouter
+from runtime.adapters.registry import AdapterRegistry
 
 
 class RuntimeRunner:
     """Minimal runtime orchestration prototype.
 
     Prototype boundary:
-    - this runner does not yet invoke a real external agent
-    - validation currently uses a clearly marked stub output
-    - agent adapter integration is the next runtime maturity step
+    - this runner invokes adapters through the adapter registry
+    - the default safe adapter is the mock adapter
+    - real external agent adapters are scaffolded but not implemented yet
     """
 
     def __init__(self):
@@ -33,12 +34,65 @@ class RuntimeRunner:
         self.calibration_engine = CalibrationEngine()
         self.calibration_store = CalibrationStore()
         self.router = RuntimeRouter()
+        self.adapter_registry = AdapterRegistry()
 
     def load_task(self, task_file: str) -> dict:
         task_path = Path(task_file)
 
         with open(task_path, "r", encoding="utf-8") as handle:
             return yaml.safe_load(handle)
+
+    def build_adapter_payload(
+        self,
+        task: dict,
+        runtime_context: dict,
+        routing_decision: dict,
+        confidence_result: dict,
+    ) -> dict:
+        return {
+            "task": task.get("task", {}),
+            "runtime_context": runtime_context,
+            "routing_decision": routing_decision,
+            "governance": {
+                "confidence_score": task["runtime"][
+                    "confidence_score"
+                ],
+                "human_validation_required": confidence_result[
+                    "human_validation_required"
+                ],
+                "required_outputs": runtime_context.get(
+                    "required_outputs", []
+                ),
+            },
+        }
+
+    def adapter_output_to_markdown(
+        self,
+        adapter_result: dict,
+    ) -> str:
+        output = adapter_result.get("output", {})
+
+        known_gaps = "\n".join(
+            f"- {gap}"
+            for gap in output.get("known_gaps", [])
+        )
+
+        return f"""
+## Implementation Summary
+{output.get('implementation_summary', '')}
+
+## Validation Summary
+{output.get('validation_summary', '')}
+
+## Confidence Gate
+{output.get('confidence_gate', '')}
+
+## Known Gaps
+{known_gaps}
+
+## Handoff
+{output.get('handoff', '')}
+"""
 
     def run(self, task_file: str) -> dict:
         task = self.load_task(task_file)
@@ -83,30 +137,36 @@ class RuntimeRunner:
             thresholds=confidence_thresholds,
         )
 
-        # PROTOTYPE STUB ONLY.
-        # This is not real agent output.
-        # Replace this with adapter output once runtime/adapters exists.
-        # The explicit stub prevents false confidence about current runtime maturity.
-        sample_output = """
-## Implementation Summary
-Runtime executed successfully.
+        preferred_agent = routing_decision["assignment"].get(
+            "preferred_agent",
+            "mock",
+        )
 
-## Validation Summary
-Validation completed.
+        adapter_name = task.get("runtime", {}).get(
+            "adapter",
+            "mock",
+        )
 
-## Confidence Gate
-Confidence: 92%
-Risk Level: Low
+        if adapter_name == "preferred":
+            adapter_name = preferred_agent
 
-## Known Gaps
-No live agent execution yet.
+        adapter = self.adapter_registry.get(adapter_name)
 
-## Handoff
-Ready for review.
-"""
+        adapter_payload = self.build_adapter_payload(
+            task=task,
+            runtime_context=runtime_context,
+            routing_decision=routing_decision,
+            confidence_result=confidence_result,
+        )
+
+        adapter_result = adapter.invoke(adapter_payload)
+
+        adapter_markdown = self.adapter_output_to_markdown(
+            adapter_result
+        )
 
         validation_result = self.validator.validate(
-            sample_output
+            adapter_markdown
         )
 
         calibration_state = (
@@ -131,13 +191,13 @@ Ready for review.
             "routing_decision": routing_decision,
             "runtime_context": runtime_context,
             "confidence_result": confidence_result,
+            "adapter_result": adapter_result,
             "validation_result": validation_result,
             "calibration_state": calibration_state,
             "calibration_result": calibration_result,
             "prototype_limits": [
-                "No real external agent invocation yet",
-                "Validation uses explicit stub output",
-                "Agent adapter layer not implemented yet",
+                "Default execution uses mock adapter unless configured otherwise",
+                "Real external agent adapters are scaffolded but not implemented yet",
             ],
         }
 
