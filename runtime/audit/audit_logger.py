@@ -1,5 +1,5 @@
 from pathlib import Path
-from datetime import datetime
+from datetime import datetime, UTC
 
 
 class AuditLogger:
@@ -16,7 +16,7 @@ class AuditLogger:
         )
 
     def write(self, event: str) -> None:
-        timestamp = datetime.utcnow().isoformat()
+        timestamp = datetime.now(UTC).isoformat()
 
         with open(self.log_path, "a", encoding="utf-8") as handle:
             handle.write(
