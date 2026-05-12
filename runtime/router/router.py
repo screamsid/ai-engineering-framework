@@ -15,10 +15,12 @@ class RuntimeRouter:
             self.rules = yaml.safe_load(handle)
 
     def route(self, task: dict) -> dict:
+        risk_level = task["governance"]["risk_level"]
+
         decision = {
             "task": {
                 "type": task["task"]["type"],
-                "risk_level": task["runtime"]["risk_level"],
+                "risk_level": risk_level,
             },
             "assignment": {},
             "governance": {
@@ -43,8 +45,7 @@ class RuntimeRouter:
 
             risk_match = (
                 "risk_level" not in match
-                or match["risk_level"]
-                == task["runtime"]["risk_level"]
+                or match["risk_level"] == risk_level
             )
 
             if task_type_match and risk_match:
