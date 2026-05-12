@@ -20,6 +20,21 @@ from runtime.router.router import RuntimeRouter
 from runtime.adapters.registry import AdapterRegistry
 
 
+EMBEDDED_SEED_MEMORY_ITEMS = [
+    {
+        "id": "memory-001",
+        "content": "Prefer small safe changes.",
+        "applies_to": [
+            "python-automation",
+        ],
+        "risk_scope": [
+            "low",
+            "medium",
+        ],
+    }
+]
+
+
 class RuntimeRunner:
     """Minimal runtime orchestration prototype.
 
@@ -27,6 +42,7 @@ class RuntimeRunner:
     - this runner invokes adapters through the adapter registry
     - the default safe adapter is the mock adapter
     - real external agent adapters are scaffolded but not implemented yet
+    - embedded seed memory is intentionally used for the prototype stage
     """
 
     def __init__(self):
@@ -35,19 +51,7 @@ class RuntimeRunner:
         self.context_assembler = ContextAssembler()
         self.context_compiler = ContextCompiler()
         self.memory_loader = MemoryLoader(
-            memory_items=[
-                {
-                    "id": "memory-001",
-                    "content": "Prefer small safe changes.",
-                    "applies_to": [
-                        "python-automation",
-                    ],
-                    "risk_scope": [
-                        "low",
-                        "medium",
-                    ],
-                }
-            ]
+            memory_items=EMBEDDED_SEED_MEMORY_ITEMS
         )
         self.token_estimator = TokenEstimator()
         self.execution_telemetry = (
@@ -260,6 +264,7 @@ class RuntimeRunner:
             "prototype_limits": [
                 "Default execution uses mock adapter unless configured otherwise",
                 "Real external agent adapters are scaffolded but not implemented yet",
+                "Embedded seed memory is used until a future memory provider story",
             ],
         }
 
