@@ -25,7 +25,9 @@ class RuntimeCallBuilder:
                     f"Missing required field: {field}"
                 )
 
-        if task_input.get("risk_level") not in [
+        risk_level = task_input.get("risk_level")
+
+        if risk_level and risk_level not in [
             "low",
             "medium",
             "high",
