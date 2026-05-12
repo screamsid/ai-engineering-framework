@@ -1,0 +1,9 @@
+calibration_policy:
+  approved_delta: 2
+  corrected_delta: -5
+  rejected_delta: -15
+
+  rationale:
+    approved: Small increase because approval alone does not prove perfect confidence.
+    corrected: Medium reduction because corrections indicate partial confidence inflation or missing detail.
+    rejected: Strong reduction because rejection indicates confidence and outcome diverged materially.
