@@ -1,0 +1,38 @@
+agents:
+  codex:
+    type: cli
+    strengths:
+      - coding
+      - refactoring
+      - repo-navigation
+      - automation
+    weak_areas:
+      - high-risk-security-review
+    preferred_for:
+      - python-automation
+      - infra-automation
+
+  claude-code:
+    type: cli
+    strengths:
+      - reasoning
+      - architecture
+      - review
+      - documentation
+    weak_areas:
+      - large-autonomous-refactors
+    preferred_for:
+      - framework-design
+      - security-review
+
+  antigravity:
+    type: orchestration
+    strengths:
+      - coordination
+      - task-management
+      - multi-agent-flow
+    weak_areas:
+      - direct-code-generation
+    preferred_for:
+      - orchestration
+      - workflow-management
