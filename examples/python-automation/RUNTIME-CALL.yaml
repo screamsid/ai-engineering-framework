@@ -1,37 +1,66 @@
-framework_call:
-  task: STORY-001
-  role: builder
-  risk: low
+version: "0.3.1"
 
-  required_rules:
-    - core-rules
-    - workflow
-    - confidence-gates
-    - risk-classification
-    - testing-standards
+task:
+  id: STORY-001
+  type: python-automation
+  objective: Build a secure inventory summary CLI for infrastructure asset reporting.
 
-  required_skills:
-    - secure-coding
-    - smoke-testing
-    - validation-testing
+  scope:
+    - Build CLI entry point
+    - Add structured logging
+    - Add validation and smoke tests
+    - Generate human-readable output summary
 
-  required_outputs:
-    - implementation_summary
-    - validation_summary
-    - confidence_gate
-    - known_gaps
-    - handoff
+  out_of_scope:
+    - Web UI
+    - Database persistence
+    - Multi-user authentication
 
+governance:
+  risk_level: low
+  confidence_score: 92
   confidence_threshold: 85
+  mode: standard
+  preset: python-automation
 
-  stop_conditions:
-    - missing_acceptance_criteria
-    - validation_missing
-    - confidence_below_threshold
-
-  escalation:
-    human_validation_required: false
-
-runtime:
+routing:
+  preferred_role: builder
   preferred_agent: codex
-  routing_reason: python-automation task with low risk and local-only execution
+  adapter: mock
+
+required_outputs:
+  - implementation_summary
+  - validation_summary
+  - confidence_gate
+  - known_gaps
+  - handoff
+
+stop_conditions:
+  - missing_acceptance_criteria
+  - validation_missing
+  - confidence_below_threshold
+  - unresolved_security_risk
+
+escalation:
+  human_validation_required: false
+
+  escalation_preferences:
+    - reviewer-check
+    - security-review
+
+validation:
+  required_tests:
+    - smoke-test
+    - validation-test
+    - logging-review
+
+  success_criteria:
+    - CLI executes successfully
+    - Validation passes
+    - Confidence threshold remains above 85
+    - Structured logs are generated correctly
+
+metadata:
+  created_by: simon
+  created_at: "2026-05-12T17:25:00Z"
+  notes: Safe local lifecycle validation using mock adapter only.
