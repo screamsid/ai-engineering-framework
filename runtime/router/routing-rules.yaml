@@ -1,11 +1,13 @@
 # Routing precedence rules
 #
-# 1. Task-type rules define primary role and preferred agent.
-# 2. Risk-level rules add governance requirements.
-# 3. Governance rules accumulate rather than replace.
-# 4. Critical-risk rules override autonomy assumptions.
-# 5. Human validation requirements take precedence over all autonomous approval paths.
-# 6. Routing remains deterministic-first unless future AI-assisted routing is explicitly enabled.
+# 1. Rules are evaluated in order from top to bottom.
+# 2. Task-type rules define primary role and preferred agent.
+# 3. If multiple matching assignment rules set the same assignment key, the last matching assignment wins.
+# 4. Risk-level rules add governance requirements.
+# 5. Governance rules accumulate rather than replace.
+# 6. Critical-risk rules override autonomy assumptions.
+# 7. Human validation requirements take precedence over all autonomous approval paths.
+# 8. Routing remains deterministic-first unless future AI-assisted routing is explicitly enabled.
 #
 # This explicit precedence model avoids hidden routing behaviour and reduces ambiguity.
 
