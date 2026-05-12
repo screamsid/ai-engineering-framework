@@ -6,6 +6,7 @@ class ContextAssembler:
         role_card: dict,
         skills: list,
         task: dict,
+        memory_items: list | None = None,
     ) -> dict:
         return {
             "task": task,
@@ -22,4 +23,5 @@ class ContextAssembler:
                 skill.get("name")
                 for skill in skills
             ],
+            "memory": memory_items or [],
         }
