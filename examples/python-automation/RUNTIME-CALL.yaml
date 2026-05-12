@@ -1,0 +1,37 @@
+framework_call:
+  task: STORY-001
+  role: builder
+  risk: low
+
+  required_rules:
+    - core-rules
+    - workflow
+    - confidence-gates
+    - risk-classification
+    - testing-standards
+
+  required_skills:
+    - secure-coding
+    - smoke-testing
+    - validation-testing
+
+  required_outputs:
+    - implementation_summary
+    - validation_summary
+    - confidence_gate
+    - known_gaps
+    - handoff
+
+  confidence_threshold: 85
+
+  stop_conditions:
+    - missing_acceptance_criteria
+    - validation_missing
+    - confidence_below_threshold
+
+  escalation:
+    human_validation_required: false
+
+runtime:
+  preferred_agent: codex
+  routing_reason: python-automation task with low risk and local-only execution
