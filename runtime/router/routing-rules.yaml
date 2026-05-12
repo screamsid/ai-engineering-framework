@@ -1,0 +1,29 @@
+routing_rules:
+  - match:
+      task_type: python-automation
+    assign:
+      role: builder
+      preferred_agent: codex
+
+  - match:
+      task_type: infra-automation
+    assign:
+      role: builder
+      preferred_agent: codex
+
+  - match:
+      task_type: framework-design
+    assign:
+      role: reviewer
+      preferred_agent: claude-code
+
+  - match:
+      risk_level: high
+    assign:
+      reviewer_required: true
+      security_review_required: true
+
+  - match:
+      risk_level: critical
+    assign:
+      human_validation_required: true
