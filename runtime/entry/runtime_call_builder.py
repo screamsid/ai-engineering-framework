@@ -14,7 +14,7 @@ REQUIRED_FIELDS = [
 
 
 class RuntimeCallBuilder:
-    """Build minimal valid RUNTIME-CALL.yaml files from human input."""
+    """Build valid RUNTIME-CALL.yaml files from human input."""
 
     def validate(self, task_input: dict) -> list:
         issues = []
@@ -92,16 +92,43 @@ class RuntimeCallBuilder:
                     task_input["task_type"],
                 ),
             },
-            "required_outputs": [
-                "implementation_summary",
-                "validation_summary",
-                "confidence_gate",
-                "known_gaps",
-                "handoff",
-            ],
+            "routing": {
+                "preferred_role": task_input.get(
+                    "preferred_role",
+                    "builder",
+                ),
+                "preferred_agent": task_input.get(
+                    "preferred_agent",
+                    "codex",
+                ),
+                "adapter": task_input.get(
+                    "adapter",
+                    "mock",
+                ),
+            },
+            "required_outputs": task_input.get(
+                "required_outputs",
+                [
+                    "implementation_summary",
+                    "validation_summary",
+                    "confidence_gate",
+                    "known_gaps",
+                    "handoff",
+                ],
+            ),
             "stop_conditions": task_input[
                 "stop_conditions"
             ],
+            "escalation": {
+                "human_validation_required": task_input.get(
+                    "human_validation_required",
+                    False,
+                ),
+                "escalation_preferences": task_input.get(
+                    "escalation_preferences",
+                    [],
+                ),
+            },
             "validation": {
                 "required_tests": task_input[
                     "validation_requirements"
@@ -109,6 +136,20 @@ class RuntimeCallBuilder:
                 "success_criteria": task_input.get(
                     "success_criteria",
                     [],
+                ),
+            },
+            "metadata": {
+                "created_by": task_input.get(
+                    "created_by",
+                    "",
+                ),
+                "created_at": task_input.get(
+                    "created_at",
+                    "",
+                ),
+                "notes": task_input.get(
+                    "notes",
+                    "",
                 ),
             },
         }
