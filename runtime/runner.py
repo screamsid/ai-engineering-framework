@@ -54,7 +54,7 @@ class RuntimeRunner:
             "runtime_context": runtime_context,
             "routing_decision": routing_decision,
             "governance": {
-                "confidence_score": task["runtime"][
+                "confidence_score": task["governance"][
                     "confidence_score"
                 ],
                 "human_validation_required": confidence_result[
@@ -132,8 +132,12 @@ class RuntimeRunner:
         ).get("minimum_autonomous_score", {})
 
         confidence_result = self.confidence_gate.evaluate(
-            confidence_score=task["runtime"]["confidence_score"],
-            risk_level=task["runtime"]["risk_level"],
+            confidence_score=task["governance"][
+                "confidence_score"
+            ],
+            risk_level=task["governance"][
+                "risk_level"
+            ],
             thresholds=confidence_thresholds,
         )
 
@@ -142,7 +146,7 @@ class RuntimeRunner:
             "mock",
         )
 
-        adapter_name = task.get("runtime", {}).get(
+        adapter_name = task.get("routing", {}).get(
             "adapter",
             "mock",
         )
@@ -176,7 +180,7 @@ class RuntimeRunner:
         )
 
         calibration_result = self.calibration_engine.adjust(
-            original_confidence=task["runtime"][
+            original_confidence=task["governance"][
                 "confidence_score"
             ],
             validation_result=calibration_state,
