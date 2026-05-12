@@ -109,11 +109,17 @@ Ready for review.
             sample_output
         )
 
+        calibration_state = (
+            "approved"
+            if validation_result["passed"]
+            else "rejected"
+        )
+
         calibration_result = self.calibration_engine.adjust(
             original_confidence=task["runtime"][
                 "confidence_score"
             ],
-            validation_result="approved",
+            validation_result=calibration_state,
         )
 
         self.calibration_store.save(
@@ -126,6 +132,7 @@ Ready for review.
             "runtime_context": runtime_context,
             "confidence_result": confidence_result,
             "validation_result": validation_result,
+            "calibration_state": calibration_state,
             "calibration_result": calibration_result,
             "prototype_limits": [
                 "No real external agent invocation yet",
