@@ -1,0 +1,31 @@
+adapter_call:
+  task:
+    id: string
+    type: string
+    objective: string
+
+  runtime:
+    role: string
+    preferred_agent: string
+    risk_level: low|medium|high|critical
+
+  context:
+    loaded_rules:
+      - string
+
+    loaded_skills:
+      - string
+
+    memory:
+      - string
+
+  governance:
+    confidence_threshold: integer
+    human_validation_required: boolean
+    required_outputs:
+      - string
+
+  execution:
+    timeout_seconds: integer
+    allow_network: boolean
+    allow_filesystem_write: boolean
