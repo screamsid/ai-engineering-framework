@@ -1,9 +1,45 @@
+version: "0.3.1"
+
 task:
   id: STORY-001
   type: python-automation
   objective: Build inventory summary CLI
 
-runtime:
-  role: builder
+  scope:
+    - Build CLI entry point
+    - Add smoke tests
+
+  out_of_scope:
+    - Web UI
+
+governance:
   risk_level: low
   confidence_score: 92
+  confidence_threshold: 85
+  mode: standard
+  preset: python-automation
+
+routing:
+  preferred_role: builder
+  preferred_agent: mock
+  adapter: mock
+
+required_outputs:
+  - implementation_summary
+  - validation_summary
+  - confidence_gate
+  - known_gaps
+  - handoff
+
+stop_conditions:
+  - confidence_below_threshold
+  - validation_missing
+
+validation:
+  required_tests:
+    - smoke-test
+    - validation-test
+
+  success_criteria:
+    - CLI executes successfully
+    - Validation passes
