@@ -17,4 +17,5 @@ class ContextCompiler:
             ),
             "confidence": runtime_context.get("confidence", {}),
             "skills": runtime_context.get("skills", []),
+            "memory": runtime_context.get("memory", []),
         }
