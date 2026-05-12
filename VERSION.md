@@ -1,8 +1,25 @@
 # Framework Version
 
-Current Version: v0.2.0
+Current Version: v0.2.1
 
 ## Release notes
+
+### v0.2.1
+- Fixed critical risk handling in confidence gates
+- Fixed calibration integrity so validation outcomes drive confidence adjustment
+- Externalised calibration policy and rationale into configuration
+- Added runtime component tests for gates, calibration, router, and runner
+- Added requirements.txt for runtime dependencies
+- Added portable test package marker for CI compatibility
+- Clarified prototype runtime boundaries and stub execution limitations
+- Added explicit router precedence and overwrite-order rules
+- Added runtime invocation example via RUNTIME-CALL.yaml
+- Completed worked Python automation lifecycle example
+- Added Memory Reviewer role definition
+- Wired Formatter role into operational workflow
+- Added future-runtime maturity labelling for conceptual capabilities
+- Replaced deprecated utcnow() usage for future Python compatibility
+- Improved governance transparency and runtime auditability
 
 ### v0.2.0
 - Added runtime governance architecture
