@@ -1,0 +1,19 @@
+routing_decision:
+  task:
+    type: string
+    risk_level: low|medium|high|critical
+
+  assignment:
+    role: string
+    preferred_agent: string
+    required_skills:
+      - string
+
+  governance:
+    reviewer_required: boolean
+    security_review_required: boolean
+    human_validation_required: boolean
+
+  confidence:
+    routing_confidence: integer
+    rationale: string
