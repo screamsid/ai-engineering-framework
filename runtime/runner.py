@@ -14,7 +14,13 @@ from runtime.router.router import RuntimeRouter
 
 
 class RuntimeRunner:
-    """Minimal runtime orchestration prototype."""
+    """Minimal runtime orchestration prototype.
+
+    Prototype boundary:
+    - this runner does not yet invoke a real external agent
+    - validation currently uses a clearly marked stub output
+    - agent adapter integration is the next runtime maturity step
+    """
 
     def __init__(self):
         self.role_loader = RoleLoader()
@@ -77,6 +83,10 @@ class RuntimeRunner:
             thresholds=confidence_thresholds,
         )
 
+        # PROTOTYPE STUB ONLY.
+        # This is not real agent output.
+        # Replace this with adapter output once runtime/adapters exists.
+        # The explicit stub prevents false confidence about current runtime maturity.
         sample_output = """
 ## Implementation Summary
 Runtime executed successfully.
@@ -117,6 +127,11 @@ Ready for review.
             "confidence_result": confidence_result,
             "validation_result": validation_result,
             "calibration_result": calibration_result,
+            "prototype_limits": [
+                "No real external agent invocation yet",
+                "Validation uses explicit stub output",
+                "Agent adapter layer not implemented yet",
+            ],
         }
 
         human_output = self.formatter.format(
