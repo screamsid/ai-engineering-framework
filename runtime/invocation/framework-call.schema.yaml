@@ -1,53 +1,153 @@
-framework_call:
-  task: string
-  role: string
-  risk: low|medium|high|critical
+framework_call_schema:
+  version:
+    type: string
+    required: true
+    description: Contract version used by this framework call.
+    validation: must be a semantic version string such as 0.3.1
 
-  required_rules:
-    - string
+  task:
+    id:
+      type: string
+      required: true
+      description: Stable task or story identifier.
+      validation: must not be empty
 
-  required_skills:
-    - string
+    type:
+      type: string
+      required: true
+      description: Task category used for routing and preset selection.
+      validation: examples include python-automation, infra-automation, security-tool, framework-design
+
+    objective:
+      type: string
+      required: true
+      description: Plain-English outcome the task must achieve.
+      validation: must be clear enough for planning and review
+
+    scope:
+      type: list[string]
+      required: true
+      description: Work that is explicitly included.
+      validation: must contain at least one item
+
+    out_of_scope:
+      type: list[string]
+      required: false
+      description: Work that must not be done as part of this task.
+      validation: empty list allowed
+
+  governance:
+    risk_level:
+      type: enum
+      required: true
+      allowed_values:
+        - low
+        - medium
+        - high
+        - critical
+      description: Operational risk classification for the task.
+      validation: critical always requires human validation
+
+    confidence_score:
+      type: integer
+      required: true
+      description: Initial confidence score for autonomous execution.
+      validation: must be between 0 and 100
+
+    confidence_threshold:
+      type: integer
+      required: true
+      description: Minimum score required for autonomous execution.
+      validation: must be between 0 and 100 and aligned to risk level
+
+    mode:
+      type: enum
+      required: true
+      allowed_values:
+        - lightweight
+        - standard
+        - full
+      description: Controls depth of planning, validation, and review.
+      validation: high and critical risk should normally use full mode
+
+    preset:
+      type: string
+      required: true
+      description: Project preset used to load default rules and expectations.
+      validation: should map to a known preset directory where available
+
+  routing:
+    preferred_role:
+      type: string
+      required: false
+      description: Preferred role if the human already knows who should perform the task.
+      validation: runtime may override if routing rules require escalation
+
+    preferred_agent:
+      type: string
+      required: false
+      description: Preferred adapter or agent such as mock, codex, claude-code, or antigravity.
+      validation: should map to an adapter registry entry
+
+    adapter:
+      type: string
+      required: false
+      description: Explicit adapter selection for runtime execution.
+      validation: use mock for safe local lifecycle testing
 
   required_outputs:
-    - string
-
-  confidence_threshold: integer
+    type: list[string]
+    required: true
+    description: Output sections required before handoff or completion.
+    validation: must include validation_summary, confidence_gate, known_gaps, and handoff unless explicitly justified
 
   stop_conditions:
-    - string
+    type: list[string]
+    required: true
+    description: Conditions that require the agent or runtime to pause, stop, or escalate.
+    validation: must include confidence_below_threshold for governed execution
 
   escalation:
-    human_validation_required: boolean
+    human_validation_required:
+      type: boolean
+      required: true
+      description: Whether human approval is required before execution or completion.
+      validation: must be true for critical risk
 
-example:
-  framework_call:
-    task: "Implement logging improvements"
-    role: "builder"
-    risk: "medium"
+    escalation_preferences:
+      type: list[string]
+      required: false
+      description: Preferred escalation paths or review types.
+      validation: examples include ask-human, security-review, reviewer-check, release-manager
 
-    required_rules:
-      - "core-rules"
-      - "confidence-gates"
-      - "agent-adherence"
-      - "testing-standards"
+  validation:
+    required_tests:
+      type: list[string]
+      required: true
+      description: Tests or checks expected for the task.
+      validation: must be proportional to risk level
 
-    required_skills:
-      - "secure-coding"
-      - "smoke-testing"
+    success_criteria:
+      type: list[string]
+      required: true
+      description: Conditions that prove the task is complete.
+      validation: should map to story acceptance criteria
 
-    required_outputs:
-      - "implementation_summary"
-      - "validation_summary"
-      - "confidence_gate"
-      - "known_gaps"
-      - "handoff"
+  metadata:
+    created_by:
+      type: string
+      required: false
+      description: Person, role, or system that created the task invocation.
+      validation: optional
 
-    confidence_threshold: 90
+    created_at:
+      type: datetime
+      required: false
+      description: Timestamp for traceability.
+      validation: ISO 8601 recommended
 
-    stop_conditions:
-      - "missing_acceptance_criteria"
-      - "unresolved_security_risk"
-
-    escalation:
-      human_validation_required: true
+    notes:
+      type: string
+      required: false
+      description: Additional human context that does not fit other fields.
+      validation: must not contain secrets
