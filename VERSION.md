@@ -1,8 +1,28 @@
 # Framework Version
 
-Current Version: v0.2.1
+Current Version: v0.3.0
 
 ## Release notes
+
+### v0.3.0
+- Added execution adapter abstraction layer
+- Added base adapter interface
+- Added adapter invocation contract schema
+- Added adapter result schema
+- Added mock execution adapter for safe runtime lifecycle testing
+- Added Codex adapter scaffold
+- Added Claude Code adapter scaffold
+- Added Antigravity adapter scaffold
+- Added adapter registry for provider isolation
+- Wired runtime runner to invoke adapters through registry
+- Replaced direct runner stub path with adapter-driven execution
+- Added adapter execution tests
+- Added context compiler for minimal runtime context generation
+- Added runtime invocation examples
+- Added memory relevance loader
+- Added lightweight token estimator
+- Added runtime execution telemetry collector
+- Preserved explicit prototype boundaries for real external agent execution
 
 ### v0.2.1
 - Fixed critical risk handling in confidence gates
