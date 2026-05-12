@@ -4,6 +4,24 @@ description: Telemetry concepts for measuring confidence quality, autonomy effec
 ---
 # Confidence Telemetry
 
+## Status
+
+Current State:
+- architectural guidance
+- future runtime evolution direction
+- partially implemented foundations only
+
+Implementation Status:
+- telemetry concepts defined
+- calibration persistence partially implemented
+- full telemetry pipeline not implemented yet
+- runtime metrics collection not implemented yet
+- governance analytics not implemented yet
+
+This document describes intended future runtime capability, not fully operational functionality.
+
+---
+
 Confidence telemetry measures whether the framework is:
 
 - improving autonomy safely
