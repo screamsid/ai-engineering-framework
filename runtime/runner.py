@@ -10,6 +10,7 @@ from runtime.formatters.human_formatter import HumanFormatter
 from runtime.audit.audit_logger import AuditLogger
 from runtime.calibration.calibration_engine import CalibrationEngine
 from runtime.calibration.store import CalibrationStore
+from runtime.router.router import RuntimeRouter
 
 
 class RuntimeRunner:
@@ -25,6 +26,7 @@ class RuntimeRunner:
         self.audit_logger = AuditLogger()
         self.calibration_engine = CalibrationEngine()
         self.calibration_store = CalibrationStore()
+        self.router = RuntimeRouter()
 
     def load_task(self, task_file: str) -> dict:
         task_path = Path(task_file)
@@ -39,7 +41,11 @@ class RuntimeRunner:
             f"Starting task: {task.get('task', {}).get('id')}"
         )
 
-        role_name = task["runtime"]["role"]
+        routing_decision = self.router.route(task)
+
+        role_name = routing_decision[
+            "assignment"
+        ].get("role", "builder")
 
         role_card = self.role_loader.load(role_name)
 
@@ -106,6 +112,7 @@ Ready for review.
 
         runtime_result = {
             "task": task.get("task", {}),
+            "routing_decision": routing_decision,
             "runtime_context": runtime_context,
             "confidence_result": confidence_result,
             "validation_result": validation_result,
