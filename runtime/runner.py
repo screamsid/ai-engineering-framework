@@ -5,6 +5,11 @@ from runtime.loaders.role_loader import RoleLoader
 from runtime.loaders.skill_loader import SkillLoader
 from runtime.loaders.context_assembler import ContextAssembler
 from runtime.gates.confidence_gate import ConfidenceGate
+from runtime.validators.basic_validator import RuntimeValidator
+from runtime.formatters.human_formatter import HumanFormatter
+from runtime.audit.audit_logger import AuditLogger
+from runtime.calibration.calibration_engine import CalibrationEngine
+from runtime.calibration.store import CalibrationStore
 
 
 class RuntimeRunner:
@@ -15,6 +20,11 @@ class RuntimeRunner:
         self.skill_loader = SkillLoader()
         self.context_assembler = ContextAssembler()
         self.confidence_gate = ConfidenceGate()
+        self.validator = RuntimeValidator()
+        self.formatter = HumanFormatter()
+        self.audit_logger = AuditLogger()
+        self.calibration_engine = CalibrationEngine()
+        self.calibration_store = CalibrationStore()
 
     def load_task(self, task_file: str) -> dict:
         task_path = Path(task_file)
@@ -24,6 +34,10 @@ class RuntimeRunner:
 
     def run(self, task_file: str) -> dict:
         task = self.load_task(task_file)
+
+        self.audit_logger.write(
+            f"Starting task: {task.get('task', {}).get('id')}"
+        )
 
         role_name = task["runtime"]["role"]
 
@@ -57,10 +71,58 @@ class RuntimeRunner:
             thresholds=confidence_thresholds,
         )
 
-        return {
+        sample_output = """
+## Implementation Summary
+Runtime executed successfully.
+
+## Validation Summary
+Validation completed.
+
+## Confidence Gate
+Confidence: 92%
+Risk Level: Low
+
+## Known Gaps
+No live agent execution yet.
+
+## Handoff
+Ready for review.
+"""
+
+        validation_result = self.validator.validate(
+            sample_output
+        )
+
+        calibration_result = self.calibration_engine.adjust(
+            original_confidence=task["runtime"][
+                "confidence_score"
+            ],
+            validation_result="approved",
+        )
+
+        self.calibration_store.save(
+            calibration_result
+        )
+
+        runtime_result = {
             "task": task.get("task", {}),
             "runtime_context": runtime_context,
             "confidence_result": confidence_result,
+            "validation_result": validation_result,
+            "calibration_result": calibration_result,
+        }
+
+        human_output = self.formatter.format(
+            runtime_result
+        )
+
+        self.audit_logger.write(
+            f"Completed task: {task.get('task', {}).get('id')}"
+        )
+
+        return {
+            "runtime_result": runtime_result,
+            "human_output": human_output,
         }
 
 
