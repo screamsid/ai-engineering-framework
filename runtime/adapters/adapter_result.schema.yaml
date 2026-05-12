@@ -1,0 +1,24 @@
+adapter_result:
+  adapter:
+    name: string
+    version: string
+
+  execution:
+    success: boolean
+    execution_time_ms: integer
+    token_estimate: integer
+
+  output:
+    implementation_summary: string
+    validation_summary: string
+    confidence_gate: string
+    known_gaps:
+      - string
+    handoff: string
+
+  governance:
+    confidence_score: integer
+    human_validation_required: boolean
+
+  errors:
+    - string
