@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from runtime.validators.basic_validator import RuntimeValidator
 
 
@@ -7,7 +9,7 @@ def test_validator_passes_valid_output():
 Implemented feature.
 
 ## Validation Summary
-Smoke tests passed.
+Smoke validation checks passed.
 
 ## Confidence Gate
 Confidence: 92%
@@ -40,7 +42,10 @@ Risk Level: Low
     result = validator.validate(output)
 
     assert result["passed"] is False
-    assert len(result["issues"]) > 0
+    assert any(
+        issue["section"] == "validation_summary"
+        for issue in result["issues"]
+    )
 
 
 def test_validator_detects_missing_risk():
@@ -49,7 +54,7 @@ def test_validator_detects_missing_risk():
 Implemented feature.
 
 ## Validation Summary
-Smoke tests passed.
+Smoke validation checks passed.
 
 ## Confidence Gate
 Confidence: 92%
@@ -65,6 +70,37 @@ Ready for review.
     result = validator.validate(output)
 
     assert any(
-        issue["message"] == "Risk classification missing"
+        issue["section"] == "confidence_gate"
+        and issue["field"] == "pattern_validation"
+        for issue in result["issues"]
+    )
+
+
+def test_valid_example_output_passes():
+    output = Path(
+        "runtime/output/examples/valid-output.md"
+    ).read_text(encoding="utf-8")
+
+    validator = RuntimeValidator()
+    result = validator.validate(output)
+
+    assert result["passed"] is True
+    assert result["issue_count"] == 0
+
+
+def test_invalid_example_output_fails_with_structured_errors():
+    output = Path(
+        "runtime/output/examples/invalid-output.md"
+    ).read_text(encoding="utf-8")
+
+    validator = RuntimeValidator()
+    result = validator.validate(output)
+
+    assert result["passed"] is False
+    assert result["issue_count"] > 0
+    assert all(
+        "section" in issue
+        and "field" in issue
+        and "message" in issue
         for issue in result["issues"]
     )
