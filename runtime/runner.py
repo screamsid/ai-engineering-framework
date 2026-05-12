@@ -4,6 +4,12 @@ import yaml
 from runtime.loaders.role_loader import RoleLoader
 from runtime.loaders.skill_loader import SkillLoader
 from runtime.loaders.context_assembler import ContextAssembler
+from runtime.compiler.context_compiler import ContextCompiler
+from runtime.memory.memory_loader import MemoryLoader
+from runtime.tokens.token_estimator import TokenEstimator
+from runtime.telemetry.execution_telemetry import (
+    ExecutionTelemetry,
+)
 from runtime.gates.confidence_gate import ConfidenceGate
 from runtime.validators.basic_validator import RuntimeValidator
 from runtime.formatters.human_formatter import HumanFormatter
@@ -27,6 +33,26 @@ class RuntimeRunner:
         self.role_loader = RoleLoader()
         self.skill_loader = SkillLoader()
         self.context_assembler = ContextAssembler()
+        self.context_compiler = ContextCompiler()
+        self.memory_loader = MemoryLoader(
+            memory_items=[
+                {
+                    "id": "memory-001",
+                    "content": "Prefer small safe changes.",
+                    "applies_to": [
+                        "python-automation",
+                    ],
+                    "risk_scope": [
+                        "low",
+                        "medium",
+                    ],
+                }
+            ]
+        )
+        self.token_estimator = TokenEstimator()
+        self.execution_telemetry = (
+            ExecutionTelemetry()
+        )
         self.confidence_gate = ConfidenceGate()
         self.validator = RuntimeValidator()
         self.formatter = HumanFormatter()
@@ -121,10 +147,22 @@ class RuntimeRunner:
             except FileNotFoundError:
                 pass
 
+        memory_items = self.memory_loader.load_relevant(
+            task_type=task["task"]["type"],
+            risk_level=task["governance"][
+                "risk_level"
+            ],
+        )
+
         runtime_context = self.context_assembler.assemble(
             role_card=role_card,
             skills=skills,
             task=task,
+            memory_items=memory_items,
+        )
+
+        compiled_context = self.context_compiler.compile(
+            runtime_context
         )
 
         confidence_thresholds = role_card.get(
@@ -158,9 +196,15 @@ class RuntimeRunner:
 
         adapter_payload = self.build_adapter_payload(
             task=task,
-            runtime_context=runtime_context,
+            runtime_context=compiled_context,
             routing_decision=routing_decision,
             confidence_result=confidence_result,
+        )
+
+        token_estimate = (
+            self.token_estimator.estimate_payload(
+                adapter_payload
+            )
         )
 
         adapter_result = adapter.invoke(adapter_payload)
@@ -190,20 +234,41 @@ class RuntimeRunner:
             calibration_result
         )
 
+        telemetry_event = (
+            self.execution_telemetry.build_event(
+                task=task.get("task", {}),
+                adapter_result=adapter_result,
+                validation_result=validation_result,
+                confidence_result=confidence_result,
+                calibration_result=calibration_result,
+                token_estimate=token_estimate,
+            )
+        )
+
         runtime_result = {
             "task": task.get("task", {}),
             "routing_decision": routing_decision,
             "runtime_context": runtime_context,
+            "compiled_context": compiled_context,
             "confidence_result": confidence_result,
             "adapter_result": adapter_result,
             "validation_result": validation_result,
             "calibration_state": calibration_state,
             "calibration_result": calibration_result,
+            "token_estimate": token_estimate,
+            "telemetry_event": telemetry_event,
             "prototype_limits": [
                 "Default execution uses mock adapter unless configured otherwise",
                 "Real external agent adapters are scaffolded but not implemented yet",
             ],
         }
+
+        if token_estimate.get("warning"):
+            runtime_result[
+                "token_warning"
+            ] = (
+                "Estimated token count exceeds recommended threshold"
+            )
 
         human_output = self.formatter.format(
             runtime_result
