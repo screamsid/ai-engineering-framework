@@ -1,8 +1,29 @@
 ---
 name: domain-trust-profiling
-description: Standards for measuring and weighting agent trustworthiness by domain and task type.
+description: Future-runtime guidance for measuring and weighting agent trustworthiness by domain and task type.
+status: planned
+maturity: conceptual
+implementation: not-implemented
 ---
 # Domain Trust Profiling
+
+## Status
+
+Current State:
+- architectural guidance
+- future runtime evolution direction
+- not implemented as runtime behaviour yet
+
+Implementation Status:
+- trust profiling concepts defined
+- domain trust metrics not implemented yet
+- runtime trust weighting not implemented yet
+- historical accuracy tracking not implemented yet
+- adaptive autonomy based on trust profiles not implemented yet
+
+This document describes intended future runtime capability, not fully operational functionality.
+
+---
 
 Agents are not equally reliable across all domains.
 
@@ -81,13 +102,15 @@ Recommended Autonomy: Medium with mandatory reviewer involvement
 
 ## Behavioural Use
 
-Trust profiles may influence:
+Trust profiles may eventually influence:
 
 - confidence weighting
 - autonomy thresholds
 - reviewer requirements
 - escalation behaviour
 - required validation depth
+
+These behaviours require future runtime implementation before they should be treated as active controls.
 
 ## Anti-Pattern
 
