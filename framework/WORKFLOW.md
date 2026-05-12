@@ -1,6 +1,6 @@
 ---
 name: workflow
-description: Standard delivery workflow with confidence gates, risk classification, validation, review, and escalation.
+description: Standard delivery workflow with confidence gates, risk classification, validation, review, formatting, and escalation.
 ---
 # Workflow
 
@@ -15,6 +15,7 @@ The goal is to:
 - stop work drifting out of control
 - make confidence and risk visible
 - escalate only where risk justifies it
+- separate machine-valid output from human-readable presentation
 
 ## Standard Story Flow
 
@@ -28,7 +29,8 @@ The goal is to:
 8. Security review when required
 9. Git checks
 10. Release check
-11. Completion, memory review, or rework
+11. Optional formatting for human-readable handoff
+12. Completion, memory review, or rework
 
 ---
 
@@ -266,7 +268,36 @@ Confirm:
 
 ---
 
-## 11. Completion, Memory Review, or Rework
+## 11. Optional Formatting: Formatter
+
+The Formatter may be used after validation, review, security review, or release check when a human-readable version is needed.
+
+The Formatter must:
+
+- preserve meaning
+- preserve confidence scores
+- preserve risk levels
+- preserve findings
+- preserve known gaps
+- preserve escalation requirements
+- avoid interpretation
+- avoid spin
+
+The Formatter must not:
+
+- change decisions
+- soften risk
+- hide uncertainty
+- add missing information
+- turn incomplete work into complete work
+
+Formatting is presentation only.
+
+Machine-readable output remains the canonical source of truth.
+
+---
+
+## 12. Completion, Memory Review, or Rework
 
 A story is complete only when:
 
@@ -311,6 +342,8 @@ Every handoff must include:
 
 No implicit knowledge transfer.
 
+If a human-readable handoff is generated, the Formatter may be used only after canonical machine-readable content is complete.
+
 ---
 
 ## Execution Principles
@@ -324,6 +357,8 @@ No implicit knowledge transfer.
 - record decisions
 - surface risk early
 - maintain working context
+- preserve machine-readable truth
+- use formatting only for presentation
 - block on risk
 - warn on style
 - learn from everything
