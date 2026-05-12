@@ -1,39 +1,143 @@
-canonical_output:
+canonical_output_schema:
+  version:
+    type: string
+    required: true
+    description: Output contract version.
+    validation: must be a semantic version string such as 0.3.1
+
   metadata:
-    role: string
-    task_type: string
-    risk_level: low|medium|high|critical
-    timestamp: datetime
+    role:
+      type: string
+      required: true
+      description: Role that produced the output.
+      validation: must not be empty
+
+    task_id:
+      type: string
+      required: true
+      description: Task or story identifier this output belongs to.
+      validation: must not be empty
+
+    task_type:
+      type: string
+      required: true
+      description: Task category used for routing and validation.
+      validation: must not be empty
+
+    risk_level:
+      type: enum
+      required: true
+      allowed_values:
+        - low
+        - medium
+        - high
+        - critical
+      description: Risk level at time of output.
+      validation: critical risk must require human validation
+
+    timestamp:
+      type: datetime
+      required: false
+      description: Output creation timestamp.
+      validation: ISO 8601 recommended
 
   execution:
-    summary: string
+    summary:
+      type: string
+      required: true
+      description: Concise summary of what was done.
+      validation: must not be empty
+
     changed_components:
-      - string
+      type: list[string]
+      required: true
+      description: Files, modules, docs, schemas, or components changed.
+      validation: empty list allowed only when no changes were made
+
     validation_performed:
-      - string
+      type: list[string]
+      required: true
+      description: Tests, checks, or reviews completed.
+      validation: must contain at least one item unless explicitly marked not-run
+
     validation_not_performed:
-      - string
+      type: list[string]
+      required: false
+      description: Tests or checks not completed.
+      validation: should explain material gaps
 
   findings:
     risks:
-      - string
+      type: list[string]
+      required: true
+      description: Known risks after execution.
+      validation: empty list allowed only when no known risks remain
+
     known_gaps:
-      - string
+      type: list[string]
+      required: true
+      description: Explicitly known limitations, gaps, or incomplete work.
+      validation: must be present even if empty
+
     blockers:
-      - string
+      type: list[string]
+      required: true
+      description: Issues that prevent completion or require escalation.
+      validation: must be present even if empty
 
   confidence_gate:
-    score: integer
-    rationale: string
-    human_validation_required: boolean
-    escalation_reason: string
+    score:
+      type: integer
+      required: true
+      description: Output confidence score.
+      validation: must be between 0 and 100
+
+    rationale:
+      type: string
+      required: true
+      description: Evidence supporting the confidence score.
+      validation: must not be empty
+
+    human_validation_required:
+      type: boolean
+      required: true
+      description: Whether human validation is required.
+      validation: must be true for critical risk
+
+    escalation_reason:
+      type: string
+      required: false
+      description: Why escalation is required, if applicable.
+      validation: required when human_validation_required is true
 
   handoff:
-    next_role: string
-    next_action: string
-    rollback_notes: string
+    next_role:
+      type: string
+      required: true
+      description: Role expected to act next.
+      validation: must not be empty
+
+    next_action:
+      type: string
+      required: true
+      description: Next required action.
+      validation: must not be empty
+
+    rollback_notes:
+      type: string
+      required: false
+      description: Rollback guidance or note that rollback is not applicable.
+      validation: required for medium, high, or critical risk
 
   calibration:
-    memory_candidate: boolean
+    memory_candidate:
+      type: boolean
+      required: true
+      description: Whether the output produced a reusable memory candidate.
+      validation: boolean required
+
     lessons_identified:
-      - string
+      type: list[string]
+      required: false
+      description: Lessons that may improve future work.
+      validation: should be sanitised before memory promotion
