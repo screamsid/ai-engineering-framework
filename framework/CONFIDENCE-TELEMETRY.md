@@ -1,8 +1,13 @@
 ---
 name: confidence-telemetry
 description: Telemetry concepts for measuring confidence quality, autonomy effectiveness, and governance health.
+status: planned
+maturity: conceptual
+implementation: not-implemented
 ---
 # Confidence Telemetry
+
+> **Planned capability:** This document describes future framework capability. It is not current operational guidance and should not be treated as implemented runtime behaviour.
 
 ## Status
 
