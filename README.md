@@ -2,6 +2,27 @@
 
 A reusable operating model and runtime governance framework for AI-assisted and multi-agent software delivery.
 
+Current framework version:
+- v0.3.2
+
+---
+
+# Project Overview
+
+> ⚠️ Work in Progress / Prototype
+
+This project is actively being built and should currently be treated as a prototype rather than a finished product.
+
+Some areas are fully working, some are partially implemented, and some sections are intentionally skeletal. In a few places, structure and placeholders exist simply so I don’t lose the direction of where the project is going or forget functionality that still needs fleshing out later.
+
+I’d rather be honest about that than pretend everything here is production-ready.
+
+The broader goal behind this project is exploring the gap between fast-moving AI-assisted development and genuinely production-ready engineering.
+
+AI can generate code quickly.
+
+The harder problem is building the guardrails, validation, operational trust, governance, and engineering discipline needed to turn rapidly generated output into systems people can actually trust and operate safely.
+
 This repository is the source of truth for how projects should be:
 
 - planned
@@ -15,8 +36,116 @@ This repository is the source of truth for how projects should be:
 
 when using AI agents in engineering workflows.
 
-Current framework version:
-- v0.3.2
+---
+
+# Why This Exists
+
+AI has dramatically reduced the friction involved in generating software.
+
+What it has not reduced is the operational, cognitive, and organisational cost of trusting that software.
+
+In many environments, humans are now becoming the bottleneck, not because they are slow, but because they remain responsible for validation, governance, operational safety, maintainability, and risk ownership.
+
+This creates a growing disconnect between:
+
+- Speed of generation
+- Speed of understanding
+- Speed of trust
+
+The result is often:
+
+- Review fatigue
+- Cognitive overload
+- Shallow validation
+- Governance bypass pressure
+- Reduced confidence in changes
+- Increased burnout across engineering teams
+
+This project exists to explore how we engineer that gap more safely.
+
+Not by removing humans from the process, but by improving:
+
+- Confidence signalling
+- Validation patterns
+- Friction gates
+- Operational guardrails
+- Structured workflows
+- Transparent reasoning
+- AI-assisted engineering discipline
+
+The aim is not to slow innovation down.
+
+The aim is to make rapid AI-assisted engineering sustainable and trustworthy.
+
+---
+
+# What Problem Is Being Explored
+
+A lot of current AI tooling focuses heavily on generation speed:
+
+- Faster code
+- Faster prototyping
+- Faster delivery
+
+But speed alone does not create trustworthy systems.
+
+We’re already starting to see the limits of that approach with the growing backlash around “vibe coding” and rapidly generated software that works initially, but becomes difficult to validate, maintain, govern, or safely operate over time.
+
+Generating code quickly is no longer the hard part.
+
+Understanding it, trusting it, validating it, and operating it responsibly at scale is where the real engineering challenge starts to emerge.
+
+As generation becomes cheaper and faster, the bottleneck moves elsewhere:
+
+- Human understanding
+- Validation
+- Operational confidence
+- Governance
+- Long-term maintainability
+- Accountability
+
+In practice, this can create a situation where engineers spend less time building and more time acting as a continuous verification layer for rapidly generated output.
+
+That model does not scale well psychologically or operationally.
+
+Part of this project is exploring whether engineering workflows can be designed differently:
+
+- Structured confidence models
+- Graduated trust systems
+- Risk-aware friction gates
+- Validation pipelines
+- Explicit operational context
+- Better reasoning visibility
+- Human review focused where it matters most
+
+The goal is not blind automation.
+
+The goal is reducing unnecessary cognitive load while keeping engineering standards high.
+
+---
+
+# Current State of the Project
+
+This repository is currently in active development.
+
+Some components are operational and already useful.
+Others are experimental, incomplete, or currently exist as scaffolding for future implementation.
+
+That is intentional.
+
+Part of the purpose of this repository is documenting ideas, workflows, validation patterns, and architectural direction early, rather than waiting until every component is fully polished.
+
+Expect:
+
+- Rough edges
+- Refactors
+- Incomplete features
+- Changing interfaces
+- Iteration as concepts evolve
+
+This is being developed openly and iteratively.
+
+---
 
 ## Start Here
 
@@ -31,6 +160,10 @@ The quickstart gets you from:
 - in under 10 minutes
 
 using the real runtime runner and adapter lifecycle.
+
+---
+
+# Existing Technical / Operational Sections
 
 ## Current Runtime Status
 
@@ -154,33 +287,6 @@ The goal is not just:
 The goal is:
 
 "operate AI-assisted engineering systems safely, consistently, and sustainably over long periods without operational degradation."
-
-## Why This Exists
-
-Without structure, AI-assisted delivery tends to:
-
-- forget rules during execution
-- drift from agreed standards
-- hide uncertainty
-- overestimate confidence
-- skip validation
-- lose useful lessons between sessions
-- repeat the same mistakes
-- create weak handoffs
-- mix planning, implementation, and review into one pass
-
-This framework exists to reduce that.
-
-It moves stable operational governance out of temporary chat context and into:
-
-- reusable framework memory
-- structured runtime controls
-- machine-readable rule cards
-- confidence gates
-- skill packs
-- validation schemas
-- calibration loops
-- telemetry concepts
 
 ## Core Principles
 
@@ -328,6 +434,17 @@ Current priorities:
 - build framework compliance automation
 - add future memory provider abstraction
 - add safer runtime persistence models
+
+---
+
+# License
+
+This project is licensed under the MIT License.
+
+See:
+- `LICENSE`
+
+---
 
 ## Final Note
 
