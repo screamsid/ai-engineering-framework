@@ -18,6 +18,44 @@ The quickstart uses the mock adapter by default because it is the safest prototy
 
 The framework now also includes a real Codex CLI adapter implementation.
 
+---
+
+# Primary Use Cases
+
+The framework currently supports two especially strong operating models:
+
+## Greenfield Development
+
+Examples:
+
+- new tools
+- automation projects
+- internal utilities
+- framework design
+
+## Surgical Implementation
+
+Examples:
+
+- bug fixes
+- small refactors
+- targeted feature changes
+- extending existing systems safely
+- operationally sensitive modifications
+
+Read:
+
+- `docs/SURGICAL-IMPLEMENTATION.md`
+
+The framework is particularly strong at surgical implementation because it naturally enforces:
+
+- explicit scope boundaries
+- confidence calibration
+- known gaps
+- validation-first execution
+- reviewer visibility
+- minimal blast radius
+
 For deeper framework concepts, see:
 
 - `README.md`
@@ -296,7 +334,7 @@ Then look at:
 
 - presets
 - modes
-- skill packs
+- surgical implementation
 - adapter integration
 - runtime governance expansion
 - framework compliance automation
