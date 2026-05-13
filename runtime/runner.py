@@ -41,8 +41,8 @@ class RuntimeRunner:
     Prototype boundary:
     - this runner invokes adapters through the adapter registry
     - the default safe adapter is the mock adapter
-    - real external agent adapters are scaffolded but not implemented yet
     - embedded seed memory is intentionally used for the prototype stage
+    - Codex adapter support is implemented but remains unvalidated against real workloads
     """
 
     def __init__(self):
@@ -79,14 +79,48 @@ class RuntimeRunner:
         routing_decision: dict,
         confidence_result: dict,
     ) -> dict:
+        governance = task.get("governance", {})
+        routing = task.get("routing", {})
+
         return {
             "task": task.get("task", {}),
             "runtime_context": runtime_context,
             "routing_decision": routing_decision,
+            "routing_config": {
+                "approval_mode": routing.get(
+                    "approval_mode",
+                    "suggest",
+                ),
+                "timeout_seconds": routing.get(
+                    "timeout_seconds",
+                    300,
+                ),
+                "allowed_paths": routing.get(
+                    "allowed_paths",
+                    [],
+                ),
+                "allow_filesystem_write": routing.get(
+                    "allow_filesystem_write",
+                    False,
+                ),
+                "model": routing.get(
+                    "model",
+                    "gpt-5",
+                ),
+            },
             "governance": {
-                "confidence_score": task["governance"][
-                    "confidence_score"
-                ],
+                "risk_level": governance.get(
+                    "risk_level",
+                    "low",
+                ),
+                "confidence_score": governance.get(
+                    "confidence_score",
+                    0,
+                ),
+                "confidence_threshold": governance.get(
+                    "confidence_threshold",
+                    85,
+                ),
                 "human_validation_required": confidence_result[
                     "human_validation_required"
                 ],
@@ -263,7 +297,7 @@ class RuntimeRunner:
             "telemetry_event": telemetry_event,
             "prototype_limits": [
                 "Default execution uses mock adapter unless configured otherwise",
-                "Real external agent adapters are scaffolded but not implemented yet",
+                "Codex adapter is implemented but still considered unvalidated against real workloads",
                 "Embedded seed memory is used until a future memory provider story",
             ],
         }
