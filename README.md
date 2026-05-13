@@ -15,16 +15,38 @@ This repository is the source of truth for how projects should be:
 
 when using AI agents in engineering workflows.
 
-The framework is designed to support:
+Current framework version:
+- v0.3.2
 
-- multi-agent delivery
-- multi-vendor model routing
-- bounded autonomy
-- confidence-based execution
-- human escalation loops
-- structured runtime governance
-- institutional operational memory
-- adaptive calibration over time
+## Current Runtime Status
+
+The framework now includes a working prototype runtime orchestration layer.
+
+Implemented runtime capabilities include:
+
+- runtime task entry pipeline
+- runtime call generation
+- role loading
+- skill loading
+- runtime routing
+- confidence gates
+- runtime validation
+- calibration persistence
+- context compilation
+- memory relevance loading
+- token estimation
+- execution telemetry events
+- adapter abstraction layer
+- mock adapter execution lifecycle
+- structured runtime output formatting
+
+The framework also includes conceptual future-state governance documents.
+
+These planned capabilities are clearly marked and are not yet implemented runtime controls.
+
+Examples:
+- `framework/CONFIDENCE-TELEMETRY.md`
+- `framework/DOMAIN-TRUST-PROFILING.md`
 
 ## What This Has Evolved Into
 
@@ -97,7 +119,7 @@ Confidence should improve through real outcomes, validation, and human review.
 
 ## Framework Architecture
 
-The framework is now split into layered operational systems.
+The framework is split into layered operational systems.
 
 ### Framework Layer
 Human-readable governance and standards.
@@ -114,12 +136,15 @@ Examples:
 Machine-readable operational enforcement.
 
 Examples:
+- runtime runner
 - rule cards
 - invocation schemas
 - validators
+- adapters
 - runtime loaders
 - confidence thresholds
 - escalation rules
+- telemetry events
 
 ### Skills Layer
 Reusable operational execution packs.
@@ -151,21 +176,41 @@ Examples:
 - rollback tracking
 - memory usefulness
 
-## Runtime Governance Model
+## Runtime Execution Lifecycle
 
-The runtime layer exists so agent harnesses can:
+Current runtime execution flow:
 
-1. classify work
-2. identify risk
-3. select agent roles
-4. load relevant rule cards
-5. load relevant skill packs
-6. inject minimal framework context
-7. validate outputs
-8. apply confidence gates
-9. escalate to humans when required
-10. record calibration outcomes
-11. propose memory updates safely
+```text
+HUMAN-TASK-ENTRY.md
+  ↓
+RuntimeCallBuilder
+  ↓
+RUNTIME-CALL.yaml
+  ↓
+RuntimeRunner
+  ↓
+Router selects role + adapter
+  ↓
+Role + skills loaded
+  ↓
+Relevant memory loaded
+  ↓
+Context assembled
+  ↓
+Context compiled
+  ↓
+Token estimate calculated
+  ↓
+Adapter invoked
+  ↓
+Output validated
+  ↓
+Confidence calibrated
+  ↓
+Telemetry event emitted
+  ↓
+Human-readable output generated
+```
 
 ## Confidence-Gated Autonomy
 
@@ -180,79 +225,118 @@ Example:
 | 50-74% | Human validation required |
 | 0-49% | Stop and escalate |
 
-Confidence is always adjusted by:
+Confidence is adjusted by:
 
 - risk level
-- historical calibration
-- validation quality
-- domain trust profile
+- validation outcomes
+- calibration policy
+- runtime governance rules
+
+Domain trust profiling is currently conceptual and not implemented runtime behaviour.
 
 ## Multi-Vendor Design
 
 The framework is intentionally vendor-agnostic.
 
-It supports:
+Current adapter structure includes:
 
-- OpenAI
-- Anthropic
-- Google
-- local models
-- future providers
+- mock adapter
+- Codex scaffold
+- Claude Code scaffold
+- Antigravity scaffold
 
 Roles map to capability tiers rather than hardcoded model names.
 
-Examples:
-
-| Tier | Typical Use |
-| --- | --- |
-| low-intensity | Narrow implementation, parsing, git operations |
-| high-intensity | Planning, architecture, security review |
-
 ## Repository Structure
 
-    .
-    ├── README.md
-    ├── VERSION.md
-    ├── framework/
-    │   ├── AGENT-ADHERENCE.md
-    │   ├── CONFIDENCE-CALIBRATION.md
-    │   ├── CONFIDENCE-GATES.md
-    │   ├── CONFIDENCE-RATINGS.md
-    │   ├── CONFIDENCE-TELEMETRY.md
-    │   ├── CONTEXT-MANAGEMENT.md
-    │   ├── DRIFT-CONTROL.md
-    │   ├── FRAMEWORK-MEMORY.md
-    │   ├── HARNESS-INTEGRATION.md
-    │   ├── MEMORY-FEEDBACK-LOOP.md
-    │   ├── MEMORY-LIFECYCLE.md
-    │   ├── RISK-CLASSIFICATION.md
-    │   ├── SKILLS.md
-    │   └── STRUCTURED-RULES.md
-    ├── runtime/
-    │   ├── README.md
-    │   ├── invocation/
-    │   ├── rules/
-    │   ├── validators/
-    │   └── telemetry/
-    ├── skills/
-    │   ├── secure-coding/
-    │   ├── smoke-testing/
-    │   └── validation-testing/
-    └── templates/
+```text
+.
+├── README.md
+├── VERSION.md
+├── framework/
+│   ├── AGENT-ADHERENCE.md
+│   ├── CONFIDENCE-CALIBRATION.md
+│   ├── CONFIDENCE-GATES.md
+│   ├── CONFIDENCE-RATINGS.md
+│   ├── CONFIDENCE-TELEMETRY.md
+│   ├── CONTEXT-MANAGEMENT.md
+│   ├── DOMAIN-TRUST-PROFILING.md
+│   ├── DRIFT-CONTROL.md
+│   ├── FRAMEWORK-MEMORY.md
+│   ├── FRAMEWORK-ROADMAP.md
+│   ├── FRICTION-CONTROL.md
+│   ├── HARNESS-INTEGRATION.md
+│   ├── MEMORY-FEEDBACK-LOOP.md
+│   ├── MEMORY-LIFECYCLE.md
+│   ├── RISK-CLASSIFICATION.md
+│   ├── SKILLS.md
+│   ├── STRUCTURED-RULES.md
+│   ├── TESTING-STANDARDS.md
+│   └── WORKFLOW.md
+├── runtime/
+│   ├── README.md
+│   ├── version.py
+│   ├── runner.py
+│   ├── entry/
+│   ├── adapters/
+│   ├── audit/
+│   ├── calibration/
+│   ├── compiler/
+│   ├── formatters/
+│   ├── gates/
+│   ├── invocation/
+│   ├── loaders/
+│   ├── memory/
+│   ├── output/
+│   ├── router/
+│   ├── rules/
+│   ├── telemetry/
+│   ├── tokens/
+│   └── validators/
+├── examples/
+│   ├── python-automation/
+│   └── runtime-invocation/
+├── skills/
+│   ├── secure-coding/
+│   ├── smoke-testing/
+│   └── validation-testing/
+├── presets/
+│   ├── infra-automation/
+│   └── security-tool/
+└── tests/
+```
+
+## Current Prototype Boundaries
+
+The current runtime implementation intentionally includes prototype-stage constraints.
+
+Examples:
+- embedded seed memory
+- mock adapter default execution
+- conceptual telemetry analytics
+- conceptual domain trust profiling
+- no persistent long-term runtime datastore
+
+These boundaries are intentional to keep the runtime:
+
+- lightweight
+- testable
+- low-blast-radius
+- operationally understandable
 
 ## Current Direction
 
 Current priorities:
 
-- build runtime loaders
-- build dynamic rule injection
-- build calibration persistence
-- build structured output parsing
+- expand runtime orchestration
+- improve adapter execution paths
 - expand role cards
 - expand skill packs
-- add runtime orchestration
-- add telemetry collection
-- add framework compliance automation
+- improve calibration persistence
+- improve runtime validation depth
+- build framework compliance automation
+- add future memory provider abstraction
+- add safer runtime persistence models
 
 ## Final Note
 
