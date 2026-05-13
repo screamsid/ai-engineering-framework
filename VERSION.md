@@ -1,8 +1,16 @@
 # Framework Version
 
-Current Version: v0.3.1
+Current Version: v0.3.2
 
 ## Release notes
+
+### v0.3.2
+- Updated repository README to reflect current runtime architecture
+- Updated documented repository structure to match actual runtime layout
+- Clarified implemented versus planned framework capabilities
+- Documented runtime execution lifecycle and orchestration flow
+- Clarified future-state governance documents with planned capability markers
+- Added roadmap references for future runtime concepts
 
 ### v0.3.1
 - Wired ContextCompiler into RuntimeRunner execution lifecycle
