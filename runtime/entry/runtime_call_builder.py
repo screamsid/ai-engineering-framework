@@ -1,5 +1,7 @@
 import yaml
 
+from runtime.version import get_framework_version
+
 
 REQUIRED_FIELDS = [
     "task_id",
@@ -63,7 +65,7 @@ class RuntimeCallBuilder:
             )
 
         return {
-            "version": "0.3.1",
+            "version": get_framework_version(),
             "task": {
                 "id": task_input["task_id"],
                 "type": task_input["task_type"],
