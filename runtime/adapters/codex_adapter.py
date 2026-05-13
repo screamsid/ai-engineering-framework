@@ -5,6 +5,9 @@ import time
 from runtime.adapters.base_adapter import BaseAdapter
 
 
+DEFAULT_CODEX_MODEL = "gpt-5"
+
+
 REQUIRED_OUTPUT_SECTIONS = {
     "implementation_summary": "## Implementation Summary",
     "validation_summary": "## Validation Summary",
@@ -13,6 +16,15 @@ REQUIRED_OUTPUT_SECTIONS = {
     "handoff": "## Handoff",
 }
 
+# IMPORTANT:
+# These CLI flags are based on the expected Codex CLI interface at the time
+# this adapter was implemented.
+#
+# They MUST be verified against the installed Codex CLI version before
+# operational use because flag names and behaviours may change between releases.
+#
+# This adapter currently assumes a stable CLI contract but does not yet include
+# version-aware compatibility handling.
 APPROVAL_MODE_FLAGS = {
     "suggest": "--suggest",
     "auto": "--auto-edit",
@@ -28,6 +40,13 @@ class CodexAdapter(BaseAdapter):
     - returns structured adapter results
     - does not use the Codex API directly
     - remains tested with mocked subprocess execution until validated against a real CLI
+
+    CLI compatibility note:
+    - this adapter was built against an expected Codex CLI interface
+    - approval flags and invocation structure may differ across Codex CLI versions
+    - flags should be verified against the installed CLI before operational use
+    - the adapter currently assumes a stable CLI contract and does not yet
+      implement version-aware compatibility handling
     """
 
     adapter_name = "codex"
@@ -65,7 +84,7 @@ class CodexAdapter(BaseAdapter):
         )
         model = routing_config.get(
             "model",
-            "gpt-5",
+            DEFAULT_CODEX_MODEL,
         )
 
         prompt = self.build_prompt(runtime_payload)
