@@ -36,6 +36,22 @@ This repository is the source of truth for how projects should be:
 
 when using AI agents in engineering workflows.
 
+A core architectural principle of the framework is separating:
+
+- durable capability abstractions
+from:
+- fast-moving provider model identifiers
+
+The framework intentionally treats model mappings as configurable operational state rather than hardcoded runtime truth.
+
+That means:
+
+- capability tiers remain stable
+- provider model identifiers are expected to drift over time
+- runtime operators are expected to periodically review and update model mappings as vendors release newer models
+
+This is considered a normal operational maintenance concern, similar to dependency or infrastructure lifecycle management.
+
 ---
 
 # Why This Exists
@@ -378,6 +394,14 @@ Current adapter structure includes:
 - Antigravity scaffold
 
 Roles map to capability tiers rather than hardcoded model names.
+
+The framework intentionally separates:
+
+- stable capability intent
+from:
+- unstable provider model identifiers
+
+Provider model mappings are expected to evolve continuously and should be treated as configurable operational state rather than fixed framework truth.
 
 ## Current Prototype Boundaries
 
