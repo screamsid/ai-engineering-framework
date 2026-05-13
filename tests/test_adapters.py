@@ -4,6 +4,7 @@ from unittest.mock import Mock, patch
 from runtime.adapters.codex_adapter import CodexAdapter
 from runtime.adapters.mock_adapter import MockAdapter
 from runtime.adapters.registry import AdapterRegistry
+from runtime.runner import RuntimeRunner
 
 
 VALID_CODEX_OUTPUT = """
@@ -45,6 +46,132 @@ def test_mock_adapter_returns_standard_result():
     assert result["execution"]["success"] is True
     assert "implementation_summary" in result["output"]
     assert "known_gaps" in result["output"]
+
+
+
+def test_runner_build_adapter_payload_includes_routing_config():
+    runner = RuntimeRunner()
+
+    payload = runner.build_adapter_payload(
+        task={
+            "task": {
+                "id": "STORY-014",
+            },
+            "routing": {
+                "approval_mode": "full",
+                "timeout_seconds": 120,
+                "allow_filesystem_write": True,
+                "model": "gpt-5-codex",
+            },
+            "governance": {
+                "risk_level": "medium",
+                "confidence_score": 90,
+            },
+        },
+        runtime_context={},
+        routing_decision={},
+        confidence_result={
+            "human_validation_required": False,
+        },
+    )
+
+    routing_config = payload["routing_config"]
+
+    assert routing_config["approval_mode"] == "full"
+    assert routing_config["timeout_seconds"] == 120
+    assert routing_config["allow_filesystem_write"] is True
+    assert routing_config["model"] == "gpt-5-codex"
+
+
+
+def test_resolve_approval_mode_filesystem_disabled_forces_suggest():
+    adapter = CodexAdapter()
+
+    result = adapter.resolve_approval_mode(
+        requested_mode="full",
+        risk_level="low",
+        allow_filesystem_write=False,
+    )
+
+    assert result == "suggest"
+
+
+
+def test_resolve_approval_mode_high_risk_blocks_auto():
+    adapter = CodexAdapter()
+
+    result = adapter.resolve_approval_mode(
+        requested_mode="auto",
+        risk_level="high",
+        allow_filesystem_write=True,
+    )
+
+    assert result == "suggest"
+
+
+
+def test_resolve_approval_mode_high_risk_blocks_full():
+    adapter = CodexAdapter()
+
+    result = adapter.resolve_approval_mode(
+        requested_mode="full",
+        risk_level="high",
+        allow_filesystem_write=True,
+    )
+
+    assert result == "suggest"
+
+
+
+def test_resolve_approval_mode_critical_risk_blocks_auto():
+    adapter = CodexAdapter()
+
+    result = adapter.resolve_approval_mode(
+        requested_mode="auto",
+        risk_level="critical",
+        allow_filesystem_write=True,
+    )
+
+    assert result == "suggest"
+
+
+
+def test_resolve_approval_mode_critical_risk_blocks_full():
+    adapter = CodexAdapter()
+
+    result = adapter.resolve_approval_mode(
+        requested_mode="full",
+        risk_level="critical",
+        allow_filesystem_write=True,
+    )
+
+    assert result == "suggest"
+
+
+
+def test_resolve_approval_mode_low_risk_suggest_stays_suggest():
+    adapter = CodexAdapter()
+
+    result = adapter.resolve_approval_mode(
+        requested_mode="suggest",
+        risk_level="low",
+        allow_filesystem_write=True,
+    )
+
+    assert result == "suggest"
+
+
+
+def test_resolve_approval_mode_low_risk_auto_stays_auto():
+    adapter = CodexAdapter()
+
+    result = adapter.resolve_approval_mode(
+        requested_mode="auto",
+        risk_level="low",
+        allow_filesystem_write=True,
+    )
+
+    assert result == "auto"
 
 
 @patch("runtime.adapters.codex_adapter.shutil.which")
