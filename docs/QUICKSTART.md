@@ -14,7 +14,9 @@ You will:
 4. execute it through the runtime runner
 5. understand what happened
 
-This quickstart intentionally uses the mock adapter so you can safely validate the runtime lifecycle locally.
+The quickstart uses the mock adapter by default because it is the safest prototype execution path.
+
+The framework now also includes a real Codex CLI adapter implementation.
 
 For deeper framework concepts, see:
 
@@ -35,6 +37,7 @@ Optional but recommended:
 
 - virtual environment support
 - VS Code or PyCharm
+- Codex CLI installed and authenticated
 
 ---
 
@@ -74,10 +77,7 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
-Current dependencies are intentionally lightweight:
-
-- PyYAML
-- pytest
+Current dependencies are intentionally lightweight.
 
 ---
 
@@ -99,7 +99,7 @@ You should see:
 
 The default execution path uses the mock adapter.
 
-This validates the full runtime lifecycle without calling external AI providers.
+This validates the governance-aware runtime lifecycle without calling external providers.
 
 ---
 
@@ -124,7 +124,9 @@ Context compiled
   ↓
 Token estimate calculated
   ↓
-Mock adapter executed
+Governance execution constraints applied
+  ↓
+Adapter invoked
   ↓
 Output validated
   ↓
@@ -133,7 +135,7 @@ Confidence calibrated
 Telemetry event emitted
 ```
 
-Even though the adapter is mocked, the governance lifecycle is real.
+Even though the default adapter is mocked, the governance lifecycle is real.
 
 That means you can safely:
 
@@ -196,12 +198,6 @@ Save the generated YAML as:
 examples/my-runtime-task.yaml
 ```
 
-Example:
-
-```bash
-python build_runtime_call.py > examples/my-runtime-task.yaml
-```
-
 You can also generate runtime calls directly inside your own tooling or harness.
 
 ---
@@ -217,11 +213,58 @@ python runtime/runner.py
 Current prototype behaviour:
 
 - default adapter = mock
-- execution is local-only
 - telemetry is runtime-only
 - embedded seed memory is used
+- governance constraints are enforced before adapter execution
 
-This is intentional during the prototype stage.
+---
+
+# Try the Codex Adapter
+
+The framework now includes a real Codex CLI adapter implementation.
+
+Prototype status:
+- implemented
+- subprocess-backed
+- governance-aware
+- tested with mocked subprocess execution
+- not yet operationally validated against real workloads
+
+Example routing block:
+
+```yaml
+routing:
+  adapter: codex
+  approval_mode: suggest
+  timeout_seconds: 300
+  allow_filesystem_write: false
+  model: gpt-5
+```
+
+Example invocation flow:
+
+```text
+RuntimeRunner
+  ↓
+CodexAdapter
+  ↓
+Codex CLI subprocess
+```
+
+Governance enforcement examples:
+
+- high-risk tasks cannot use unsafe autonomous mode
+- filesystem-write restrictions downgrade execution mode automatically
+- human validation checkpoints are enforced in runtime state
+
+Important:
+- the Codex CLI must already be installed
+- the Codex CLI must already be authenticated
+- the adapter returns structured errors if Codex is unavailable
+
+Until real-task validation is complete:
+- mock remains the safest default
+- Codex should be treated as prototype execution
 
 ---
 
@@ -231,7 +274,9 @@ This is intentional during the prototype stage.
 pytest
 ```
 
-You should see all tests passing.
+The test suite uses mocked subprocess execution.
+
+No real Codex CLI is required for CI.
 
 ---
 
@@ -247,12 +292,6 @@ Explore:
 - `runtime/memory/`
 - `runtime/calibration/`
 
-Read:
-
-- `README.md`
-- `runtime/README.md`
-- `framework/FRAMEWORK-ROADMAP.md`
-
 Then look at:
 
 - presets
@@ -260,8 +299,8 @@ Then look at:
 - skill packs
 - adapter integration
 - runtime governance expansion
-- calibration persistence
 - framework compliance automation
+- future memory provider abstraction
 
 ---
 
@@ -271,7 +310,8 @@ The current runtime is intentionally lightweight.
 
 Current prototype limitations include:
 
-- mock adapter default execution
+- mock adapter remains default execution path
+- Codex adapter not yet operationally validated
 - embedded seed memory
 - no persistent telemetry backend
 - conceptual trust profiling only
