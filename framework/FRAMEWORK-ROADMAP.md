@@ -13,6 +13,15 @@ The purpose is to:
 - maintain continuity across sessions
 - prevent repeated rediscovery of the same needs
 
+The roadmap also identifies conceptual or planned capabilities that are documented elsewhere in the framework but are not yet implemented runtime behaviour.
+
+Referenced planned capabilities:
+
+- `CONFIDENCE-TELEMETRY.md`
+- `DOMAIN-TRUST-PROFILING.md`
+
+These documents describe future-state operational concepts and should not be treated as active framework controls.
+
 ## Priority Levels
 
 | Priority | Meaning |
