@@ -1,8 +1,28 @@
 # Framework Version
 
-Current Version: v0.3.2
+Current Version: v0.4.0
 
 ## Release notes
+
+### v0.4.0
+- Implemented the Codex CLI adapter as the first real external execution adapter beyond the mock adapter
+- Added Codex subprocess invocation with structured adapter result normalisation
+- Added Codex governance enforcement for approval mode, filesystem write restrictions, timeout handling, model selection, and human validation checkpoints
+- Hardened Codex approval-mode governance so high and critical risk tasks cannot use autonomous auto or full modes
+- Added explicit Codex governance unit tests covering approval-mode constraints
+- Added mocked Codex subprocess tests for successful invocation, timeout handling, malformed output handling, missing CLI handling, and registry lookup
+- Added routing_config propagation from runtime tasks into adapter payloads
+- Added explicit runner test coverage proving approval mode, timeout, model, and filesystem write settings reach adapters
+- Extracted the Codex default model into a named constant
+- Documented Codex CLI flag assumptions and version-compatibility risks in the adapter
+- Added `docs/QUICKSTART.md` as the primary onboarding path for running the framework locally
+- Added `docs/SURGICAL-IMPLEMENTATION.md` to document the surgical implementation pattern for safe changes in existing codebases
+- Added the `surgical-implementation` routing task type with conservative defaults
+- Added the `presets/surgical-implementation/` preset covering read-first discipline, minimal blast radius, and mandatory diff review
+- Updated `docs/QUICKSTART.md` to position surgical implementation as a primary use case alongside greenfield development
+- Updated the README to clearly frame the project as an active prototype and engineering exploration into AI-assisted trust, governance, and operational safety
+- Clarified token estimation and telemetry maturity in the README, including current approximation limits and planned token cost tracking
+- Added MIT licence file and README licence section
 
 ### v0.3.2
 - Updated repository README to reflect current runtime architecture
