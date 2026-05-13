@@ -1,0 +1,62 @@
+version: "0.4.0"
+
+task:
+  id: RUNTIME-PREFERRED-001
+  type: python-automation
+  objective: Build a multi-environment configuration validation helper where adapter selection should follow the runtime router decision.
+
+  scope:
+    - Review the existing Python automation task shape
+    - Generate a small validation helper for environment-specific configuration checks
+    - Preserve the runtime router's preferred adapter selection
+    - Return implementation, validation, confidence, known gaps, and handoff sections
+
+  out_of_scope:
+    - Hardcoding a specific execution adapter
+    - Adding external provider credentials
+    - Changing runtime routing rules
+    - Modifying production configuration files
+
+governance:
+  risk_level: low
+  confidence_score: 90
+  confidence_threshold: 85
+  mode: standard
+  preset: python-automation
+
+routing:
+  preferred_role: builder
+  preferred_agent: codex
+  adapter: preferred
+
+required_outputs:
+  - implementation_summary
+  - validation_summary
+  - confidence_gate
+  - known_gaps
+  - handoff
+
+stop_conditions:
+  - confidence_below_threshold
+  - validation_missing
+  - scope_unclear
+
+escalation:
+  human_validation_required: false
+  escalation_preferences:
+    - reviewer-check
+
+validation:
+  required_tests:
+    - smoke-test
+    - validation-test
+
+  success_criteria:
+    - Runtime uses the router decision when adapter is set to preferred
+    - Task output includes all required sections
+    - No external adapter is hardcoded in the task payload
+
+metadata:
+  created_by: framework-example
+  created_at: "2026-05-13T17:31:00Z"
+  notes: Demonstrates adapter selection being deferred to the runtime router rather than fixed directly in the invocation file.
