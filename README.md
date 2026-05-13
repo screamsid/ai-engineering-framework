@@ -48,13 +48,24 @@ Implemented runtime capabilities include:
 - calibration persistence
 - context compilation
 - memory relevance loading
-- token estimation
-- execution telemetry events
 - adapter abstraction layer
 - mock adapter execution lifecycle
 - Codex CLI adapter implementation
 - governance-aware adapter execution constraints
 - structured runtime output formatting
+
+Partially implemented runtime capabilities include:
+
+- pre-execution token estimation
+- partial execution telemetry event generation
+
+Planned or future-state capabilities include:
+
+- post-execution actual token capture
+- token cost calculation and tracking
+- telemetry analytics pipeline
+- domain trust profiling
+- confidence telemetry analytics
 
 The framework also includes conceptual future-state governance documents.
 
@@ -63,6 +74,42 @@ These planned capabilities are clearly marked and are not yet implemented runtim
 Examples:
 - `framework/CONFIDENCE-TELEMETRY.md`
 - `framework/DOMAIN-TRUST-PROFILING.md`
+
+## Token and Cost Visibility
+
+The current runtime includes lightweight pre-execution token estimation.
+
+Current behaviour:
+
+- payload size is estimated before adapter invocation
+- the estimate is included in runtime telemetry events
+- estimates are generated using a rough approximation model
+- the current approximation is based on character count divided by four
+
+This estimator exists to provide:
+
+- basic payload visibility
+- oversized-context warnings
+- early governance instrumentation
+
+It is intentionally lightweight during the prototype stage.
+
+Current limitations:
+
+- estimates are approximate only
+- no provider-specific tokenisation exists yet
+- estimates are not calibrated against real token usage
+- no adaptive estimation improvement exists yet
+- post-execution actual token capture is not implemented yet
+- token cost calculation is not implemented yet
+- telemetry aggregation and analytics are not implemented yet
+
+Token cost tracking and actual token reconciliation are planned future capabilities.
+
+Planned follow-on work:
+- STORY-TOKEN-COST-TRACKING
+
+The goal is progressive observability maturity without prematurely introducing heavy telemetry infrastructure into the prototype runtime.
 
 ## Adapter Status
 
@@ -250,6 +297,10 @@ Examples:
 - mock adapter remains default execution path
 - Codex adapter not yet operationally validated against real workloads
 - embedded seed memory
+- approximate token estimation only
+- no post-execution actual token capture
+- no token cost calculation
+- no telemetry aggregation backend
 - conceptual telemetry analytics
 - conceptual domain trust profiling
 - no persistent long-term runtime datastore
@@ -266,6 +317,9 @@ These boundaries are intentional to keep the runtime:
 Current priorities:
 
 - validate Codex adapter against real non-destructive tasks
+- improve token visibility and telemetry maturity
+- implement token cost tracking
+- implement post-execution token reconciliation
 - expand adapter execution paths
 - expand role cards
 - expand skill packs
