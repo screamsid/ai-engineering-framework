@@ -77,25 +77,13 @@ The aim is not to slow innovation down.
 
 The aim is to make rapid AI-assisted engineering sustainable and trustworthy.
 
----
-
-# What Problem Is Being Explored
-
-A lot of current AI tooling focuses heavily on generation speed:
-
-- Faster code
-- Faster prototyping
-- Faster delivery
-
-But speed alone does not create trustworthy systems.
-
-We’re already starting to see the limits of that approach with the growing backlash around “vibe coding” and rapidly generated software that works initially, but becomes difficult to validate, maintain, govern, or safely operate over time.
+A lot of current AI tooling focuses heavily on generation speed, but speed alone does not create trustworthy systems.
 
 Generating code quickly is no longer the hard part.
 
 Understanding it, trusting it, validating it, and operating it responsibly at scale is where the real engineering challenge starts to emerge.
 
-As generation becomes cheaper and faster, the bottleneck moves elsewhere:
+As generation becomes cheaper and faster, the bottleneck increasingly moves toward:
 
 - Human understanding
 - Validation
@@ -104,11 +92,7 @@ As generation becomes cheaper and faster, the bottleneck moves elsewhere:
 - Long-term maintainability
 - Accountability
 
-In practice, this can create a situation where engineers spend less time building and more time acting as a continuous verification layer for rapidly generated output.
-
-That model does not scale well psychologically or operationally.
-
-Part of this project is exploring whether engineering workflows can be designed differently:
+Part of this project is exploring whether engineering workflows can be designed differently through:
 
 - Structured confidence models
 - Graduated trust systems
@@ -186,11 +170,11 @@ Implemented runtime capabilities include:
 - Codex CLI adapter implementation
 - governance-aware adapter execution constraints
 - structured runtime output formatting
+- execution telemetry event generation
 
 Partially implemented runtime capabilities include:
 
 - pre-execution token estimation
-- partial execution telemetry event generation
 
 Planned or future-state capabilities include:
 
@@ -420,20 +404,11 @@ These boundaries are intentional to keep the runtime:
 
 ## Current Direction
 
-Current priorities:
+The framework is currently focused on validating the runtime execution model, improving governance-aware observability, expanding adapter support, and strengthening the operational trust layer around AI-assisted delivery.
 
-- validate Codex adapter against real non-destructive tasks
-- improve token visibility and telemetry maturity
-- implement token cost tracking
-- implement post-execution token reconciliation
-- expand adapter execution paths
-- expand role cards
-- expand skill packs
-- improve calibration persistence
-- improve runtime validation depth
-- build framework compliance automation
-- add future memory provider abstraction
-- add safer runtime persistence models
+Longer-term roadmap items and future-state runtime capabilities are tracked in:
+
+- `framework/FRAMEWORK-ROADMAP.md`
 
 ---
 
