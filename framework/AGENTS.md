@@ -32,7 +32,16 @@ The framework must optimise for:
 
 Configure your harnessing environment to map these abstractions to the right models for your chosen vendor.
 
-> Model strings below are examples only and may change as vendors update their APIs and releases.
+> Model strings below are examples only and may change as vendors update their APIs, releases, and routing strategies.
+>
+> This is an intentional framework tradeoff:
+>
+> - the capability tier abstraction is durable
+> - specific model identifiers are not
+>
+> Maintaining provider model mappings is an operational responsibility of the runtime or harness owner and should be reviewed periodically as vendors release newer models.
+>
+> The framework is designed so these mappings remain configurable rather than hardcoded into runtime behaviour.
 >
 > Always verify current model identifiers against provider documentation before configuring production routing:
 >
@@ -43,7 +52,7 @@ Configure your harnessing environment to map these abstractions to the right mod
 | Tier | Typical capability needed | Anthropic Example | OpenAI Example | Google Example |
 | --- | --- | --- | --- | --- |
 | low-intensity | Narrow logic, parsing, git operations | `claude-3-5-haiku-latest` | `gpt-4o-mini` | `gemini-1.5-flash` |
-| high-intensity | Planning, security, deep reasoning | `claude-3-7-sonnet-latest` | `gpt-4.1` | `gemini-1.5-pro` |
+| high-intensity | Planning, security, deep reasoning | `claude-3-7-sonnet-latest` | `o3` | `gemini-1.5-pro` |
 
 ## Skills and capability routing
 
