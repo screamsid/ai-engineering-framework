@@ -32,10 +32,18 @@ The framework must optimise for:
 
 Configure your harnessing environment to map these abstractions to the right models for your chosen vendor.
 
+> Model strings below are examples only and may change as vendors update their APIs and releases.
+>
+> Always verify current model identifiers against provider documentation before configuring production routing:
+>
+> - Anthropic: https://docs.anthropic.com/en/docs/models-overview
+> - OpenAI: https://platform.openai.com/docs/models
+> - Google AI: https://ai.google.dev/gemini-api/docs/models
+
 | Tier | Typical capability needed | Anthropic Example | OpenAI Example | Google Example |
 | --- | --- | --- | --- | --- |
-| low-intensity | Narrow logic, parsing, git operations | `claude-4.6-sonnet` | `gpt-5.4-mini` | `gemini-3.1-flash-lite` |
-| high-intensity | Planning, security, deep reasoning | `claude-4.6-opus` | `gpt-5.4-pro` | `gemini-3.1-pro` |
+| low-intensity | Narrow logic, parsing, git operations | `claude-3-5-haiku-latest` | `gpt-4o-mini` | `gemini-1.5-flash` |
+| high-intensity | Planning, security, deep reasoning | `claude-3-7-sonnet-latest` | `gpt-4.1` | `gemini-1.5-pro` |
 
 ## Skills and capability routing
 
