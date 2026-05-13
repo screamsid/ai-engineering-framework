@@ -189,7 +189,7 @@ class CodexAdapter(BaseAdapter):
         if not allow_filesystem_write:
             return "suggest"
 
-        if risk_level in ["high", "critical"] and mode == "auto":
+        if risk_level in ["high", "critical"] and mode in ["auto", "full"]:
             return "suggest"
 
         return mode
