@@ -7,6 +7,8 @@ implementation: not-implemented
 ---
 # Domain Trust Profiling
 
+> **Planned capability:** This document describes future framework capability. It is not current operational guidance and should not be treated as implemented runtime behaviour.
+
 ## Status
 
 Current State:
