@@ -1,8 +1,23 @@
 # Framework Version
 
-Current Version: v0.3.0
+Current Version: v0.3.1
 
 ## Release notes
+
+### v0.3.1
+- Wired ContextCompiler into RuntimeRunner execution lifecycle
+- Wired MemoryLoader into runtime context assembly
+- Added embedded seed memory support for prototype execution
+- Wired TokenEstimator into adapter invocation flow
+- Wired ExecutionTelemetry into runtime execution lifecycle
+- Added runtime token warning support
+- Added telemetry event output to runtime_result
+- Added runtime runner integration coverage
+- Added HUMAN-TASK-ENTRY worked example
+- Added RuntimeCallBuilder end-to-end entry tests
+- Fixed duplicate validation errors for missing risk_level
+- Aligned RuntimeCallBuilder output with invocation schema and worked example
+- Centralised framework version lookup via VERSION.md
 
 ### v0.3.0
 - Added execution adapter abstraction layer
