@@ -3,7 +3,7 @@
 A reusable operating model and runtime governance framework for AI-assisted and multi-agent software delivery.
 
 Current framework version:
-- v0.3.2
+- v0.4.0
 
 ---
 
