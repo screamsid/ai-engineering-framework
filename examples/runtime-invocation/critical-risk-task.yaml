@@ -1,0 +1,72 @@
+version: "0.4.0"
+
+task:
+  id: RUNTIME-CRITICAL-001
+  type: infra-automation
+  objective: Prepare a production firewall policy migration removing legacy broad allow rules between datacentre segments while preserving validated business-critical flows.
+
+  scope:
+    - Review the proposed firewall policy change set
+    - Identify broad allow rules scheduled for removal
+    - Validate that approved application flows remain documented
+    - Produce a rollback-aware implementation plan
+    - Generate validation and handoff guidance for human review
+
+  out_of_scope:
+    - Directly applying firewall changes to production devices
+    - Removing emergency access rules
+    - Modifying VPN termination policies
+    - Changing authentication or identity systems
+    - Executing configuration writes against live infrastructure
+
+governance:
+  risk_level: critical
+  confidence_score: 96
+  confidence_threshold: 95
+  mode: full
+  preset: infra-automation
+
+routing:
+  preferred_role: infrastructure-engineer
+  preferred_agent: mock
+  adapter: mock
+
+required_outputs:
+  - implementation_summary
+  - validation_summary
+  - confidence_gate
+  - known_gaps
+  - handoff
+
+stop_conditions:
+  - confidence_below_threshold
+  - unreviewed_diff
+  - unresolved_security_risk
+  - missing_rollback_plan
+  - validation_missing
+
+escalation:
+  human_validation_required: true
+  escalation_preferences:
+    - security-review
+    - release-manager
+    - infrastructure-review
+
+validation:
+  required_tests:
+    - policy-diff-review
+    - rollback-validation
+    - staged-environment-test
+    - security-review
+
+  success_criteria:
+    - All firewall policy removals are documented and reviewable
+    - Rollback steps are explicitly defined
+    - Human validation occurs before any production execution
+    - No live infrastructure changes are performed automatically
+    - Known gaps and operational risks are surfaced clearly
+
+metadata:
+  created_by: framework-example
+  created_at: "2026-05-13T17:32:00Z"
+  notes: Demonstrates governance escalation and human validation requirements for critical-risk infrastructure work while keeping execution safely routed through the mock adapter.
