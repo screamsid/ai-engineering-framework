@@ -30,7 +30,7 @@ The quickstart gets you from:
 - to a successful runtime execution
 - in under 10 minutes
 
-using the real runtime runner and mock adapter lifecycle.
+using the real runtime runner and adapter lifecycle.
 
 ## Current Runtime Status
 
@@ -52,6 +52,8 @@ Implemented runtime capabilities include:
 - execution telemetry events
 - adapter abstraction layer
 - mock adapter execution lifecycle
+- Codex CLI adapter implementation
+- governance-aware adapter execution constraints
 - structured runtime output formatting
 
 The framework also includes conceptual future-state governance documents.
@@ -61,6 +63,30 @@ These planned capabilities are clearly marked and are not yet implemented runtim
 Examples:
 - `framework/CONFIDENCE-TELEMETRY.md`
 - `framework/DOMAIN-TRUST-PROFILING.md`
+
+## Adapter Status
+
+| Adapter | Status | Notes |
+| --- | --- | --- |
+| Mock | Stable prototype | Safe default execution path |
+| Codex | Implemented, tested-with-mocks, unvalidated | Real subprocess-backed CLI execution |
+| Claude Code | Scaffold only | Future story |
+| Antigravity | Scaffold only | Future story |
+
+The Codex adapter currently:
+
+- invokes the local Codex CLI
+- enforces governance execution constraints
+- supports timeout handling
+- supports approval-mode mapping
+- supports structured adapter result normalisation
+- is tested using mocked subprocess execution
+
+The Codex adapter has not yet completed real-task validation runs against a live Codex CLI.
+
+Until validated:
+- the mock adapter remains the safest default
+- Codex should be treated as prototype-stage runtime execution
 
 ## What This Has Evolved Into
 
@@ -131,6 +157,21 @@ The harness should inject minimal relevant rules and validate outputs automatica
 ### Calibration matters more than raw confidence
 Confidence should improve through real outcomes, validation, and human review.
 
+## Runtime Governance Enforcement
+
+The runtime now actively influences execution behaviour.
+
+Examples:
+
+- filesystem write restrictions can downgrade execution mode
+- high-risk tasks can prevent autonomous execution
+- human validation requirements create explicit execution checkpoints
+- adapter execution settings are governed centrally through runtime policy
+
+This is an intentional architectural direction.
+
+The framework is designed so governance becomes executable runtime behaviour, not just prompt guidance.
+
 ## Framework Architecture
 
 The framework is split into layered operational systems.
@@ -138,57 +179,17 @@ The framework is split into layered operational systems.
 ### Framework Layer
 Human-readable governance and standards.
 
-Examples:
-- engineering standards
-- security standards
-- testing standards
-- confidence gates
-- memory lifecycle
-- adherence controls
-
 ### Runtime Layer
 Machine-readable operational enforcement.
-
-Examples:
-- runtime runner
-- rule cards
-- invocation schemas
-- validators
-- adapters
-- runtime loaders
-- confidence thresholds
-- escalation rules
-- telemetry events
 
 ### Skills Layer
 Reusable operational execution packs.
 
-Examples:
-- secure coding
-- smoke testing
-- validation testing
-- security review
-- dependency analysis
-
 ### Memory Layer
 Durable institutional learning.
 
-Examples:
-- reusable lessons
-- anti-patterns
-- calibration improvements
-- validation improvements
-- drift prevention patterns
-
 ### Telemetry Layer
 Operational measurement and calibration.
-
-Examples:
-- confidence calibration
-- adherence scoring
-- escalation frequency
-- rollback tracking
-- memory usefulness
 
 ## Runtime Execution Lifecycle
 
@@ -215,6 +216,8 @@ Context compiled
   ↓
 Token estimate calculated
   ↓
+Governance execution constraints applied
+  ↓
 Adapter invoked
   ↓
 Output validated
@@ -226,28 +229,6 @@ Telemetry event emitted
 Human-readable output generated
 ```
 
-## Confidence-Gated Autonomy
-
-The framework uses confidence gates to control autonomy.
-
-Example:
-
-| Confidence | Behaviour |
-| --- | --- |
-| 90-100% | Autonomous execution allowed |
-| 75-89% | Low-risk autonomous execution only |
-| 50-74% | Human validation required |
-| 0-49% | Stop and escalate |
-
-Confidence is adjusted by:
-
-- risk level
-- validation outcomes
-- calibration policy
-- runtime governance rules
-
-Domain trust profiling is currently conceptual and not implemented runtime behaviour.
-
 ## Multi-Vendor Design
 
 The framework is intentionally vendor-agnostic.
@@ -255,79 +236,19 @@ The framework is intentionally vendor-agnostic.
 Current adapter structure includes:
 
 - mock adapter
-- Codex scaffold
+- Codex CLI adapter
 - Claude Code scaffold
 - Antigravity scaffold
 
 Roles map to capability tiers rather than hardcoded model names.
-
-## Repository Structure
-
-```text
-.
-├── README.md
-├── VERSION.md
-├── docs/
-│   └── QUICKSTART.md
-├── framework/
-│   ├── AGENT-ADHERENCE.md
-│   ├── CONFIDENCE-CALIBRATION.md
-│   ├── CONFIDENCE-GATES.md
-│   ├── CONFIDENCE-RATINGS.md
-│   ├── CONFIDENCE-TELEMETRY.md
-│   ├── CONTEXT-MANAGEMENT.md
-│   ├── DOMAIN-TRUST-PROFILING.md
-│   ├── DRIFT-CONTROL.md
-│   ├── FRAMEWORK-MEMORY.md
-│   ├── FRAMEWORK-ROADMAP.md
-│   ├── FRICTION-CONTROL.md
-│   ├── HARNESS-INTEGRATION.md
-│   ├── MEMORY-FEEDBACK-LOOP.md
-│   ├── MEMORY-LIFECYCLE.md
-│   ├── RISK-CLASSIFICATION.md
-│   ├── SKILLS.md
-│   ├── STRUCTURED-RULES.md
-│   ├── TESTING-STANDARDS.md
-│   └── WORKFLOW.md
-├── runtime/
-│   ├── README.md
-│   ├── version.py
-│   ├── runner.py
-│   ├── entry/
-│   ├── adapters/
-│   ├── audit/
-│   ├── calibration/
-│   ├── compiler/
-│   ├── formatters/
-│   ├── gates/
-│   ├── invocation/
-│   ├── loaders/
-│   ├── memory/
-│   ├── output/
-│   ├── router/
-│   ├── rules/
-│   ├── telemetry/
-│   ├── tokens/
-│   └── validators/
-├── examples/
-│   ├── python-automation/
-│   └── runtime-invocation/
-├── skills/
-│   ├── secure-coding/
-│   ├── smoke-testing/
-│   └── validation-testing/
-├── presets/
-│   ├── infra-automation/
-│   └── security-tool/
-└── tests/
-```
 
 ## Current Prototype Boundaries
 
 The current runtime implementation intentionally includes prototype-stage constraints.
 
 Examples:
-- mock adapter default execution
+- mock adapter remains default execution path
+- Codex adapter not yet operationally validated against real workloads
 - embedded seed memory
 - conceptual telemetry analytics
 - conceptual domain trust profiling
@@ -344,8 +265,8 @@ These boundaries are intentional to keep the runtime:
 
 Current priorities:
 
-- expand runtime orchestration
-- improve adapter execution paths
+- validate Codex adapter against real non-destructive tasks
+- expand adapter execution paths
 - expand role cards
 - expand skill packs
 - improve calibration persistence
