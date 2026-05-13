@@ -25,6 +25,15 @@ routing_rules:
       preferred_agent: codex
 
   - match:
+      task_type: surgical-implementation
+    assign:
+      role: builder
+      preferred_agent: codex
+      reviewer_required: true
+      human_validation_required: true
+      approval_mode: suggest
+
+  - match:
       task_type: framework-design
     assign:
       role: reviewer
