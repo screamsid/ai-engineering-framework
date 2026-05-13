@@ -18,6 +18,20 @@ when using AI agents in engineering workflows.
 Current framework version:
 - v0.3.2
 
+## Start Here
+
+If this is your first time using the framework:
+
+➡️ Read: `docs/QUICKSTART.md`
+
+The quickstart gets you from:
+
+- clean clone
+- to a successful runtime execution
+- in under 10 minutes
+
+using the real runtime runner and mock adapter lifecycle.
+
 ## Current Runtime Status
 
 The framework now includes a working prototype runtime orchestration layer.
@@ -253,6 +267,8 @@ Roles map to capability tiers rather than hardcoded model names.
 .
 ├── README.md
 ├── VERSION.md
+├── docs/
+│   └── QUICKSTART.md
 ├── framework/
 │   ├── AGENT-ADHERENCE.md
 │   ├── CONFIDENCE-CALIBRATION.md
@@ -311,8 +327,8 @@ Roles map to capability tiers rather than hardcoded model names.
 The current runtime implementation intentionally includes prototype-stage constraints.
 
 Examples:
-- embedded seed memory
 - mock adapter default execution
+- embedded seed memory
 - conceptual telemetry analytics
 - conceptual domain trust profiling
 - no persistent long-term runtime datastore
