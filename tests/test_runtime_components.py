@@ -80,7 +80,7 @@ def test_router_assigns_builder_for_python_automation():
         "task": {
             "type": "python-automation",
         },
-        "runtime": {
+        "governance": {
             "risk_level": "low",
         },
     }
@@ -98,7 +98,7 @@ def test_router_requires_reviews_for_high_risk():
         "task": {
             "type": "infra-automation",
         },
-        "runtime": {
+        "governance": {
             "risk_level": "high",
         },
     }
