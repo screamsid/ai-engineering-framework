@@ -1,6 +1,7 @@
 from runtime.entry.runtime_call_builder import (
     RuntimeCallBuilder,
 )
+from runtime.version import get_framework_version
 
 
 VALID_INPUT = {
@@ -54,7 +55,7 @@ VALID_INPUT = {
 
 
 EXPECTED_RUNTIME_CALL = {
-    "version": "0.3.1",
+    "version": get_framework_version(),
     "task": {
         "id": "STORY-001",
         "type": "python-automation",
