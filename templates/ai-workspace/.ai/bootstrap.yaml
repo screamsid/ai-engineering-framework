@@ -1,15 +1,16 @@
-version: 1
+version: 2
 
 project:
   name: replace-with-project-name
   framework_version: v0.5
 
 agent:
-  default_profile: project-engineer
+  profile: project-engineer
   response_style: concise
   require_review: true
   require_task_ledger_update: true
   require_memory_review: true
+  agent_may_select_profile: false
 
 mode:
   default: production
@@ -20,19 +21,26 @@ mode:
     - production
     - maintenance
 
-profile:
-  file: .ai/project-profile.yaml
-  agent_may_select_profile: false
-  agent_may_modify_profile: false
+profiles:
+  project_path: .ai/profiles
+  framework_path: framework/profiles
+  active: project-engineer
+
+bootstrap:
+  report: .ai/bootstrap-report.md
+  project_health: .ai/project-health.yaml
+  validation_skill: bootstrap-validation
 
 workspace:
   durable_ai_paths:
     - .ai/AGENTS.md
     - .ai/bootstrap.yaml
-    - .ai/project-profile.yaml
+    - .ai/profiles/project-engineer.yaml
     - .ai/current-task.md
     - .ai/task-ledger.md
     - .ai/memory/project-memory.md
+    - .ai/bootstrap-report.md
+    - .ai/project-health.yaml
   transient_ai_paths:
     - .ai/scratch/
     - .ai/cache/
@@ -58,19 +66,9 @@ memory:
 
 skills:
   framework:
-    - bootstrap
-    - planning
-    - git
-    - secure-coding
-    - testing
-    - documentation
-    - reviewing
-    - memory-management
-    - confidence-gates
-    - workspace-hygiene
-    - promotion
+    source: resolved-framework-profile
   project:
-    source: .ai/project-profile.yaml
+    source: resolved-project-profile
 
 git:
   require_status_check_before_changes: true
@@ -107,8 +105,9 @@ review:
 completion:
   required_outputs:
     - outcome_summary
+    - framework_alignment
     - files_changed
     - validation_performed
     - confidence_rating
     - memory_updates
-    - next_task
+    - remaining_technical_debt
