@@ -36,6 +36,15 @@ calibration/
 *.crt
 secrets/
 
+# AI workspace transient state
+.ai/scratch/
+.ai/cache/
+.ai/runs/
+.ai/tmp/
+.ai/sandbox/
+.ai/research/
+.ai/experiments/
+
 # Build
 build/
 dist/
