@@ -1,0 +1,9 @@
+framework_version: v0.5
+active_profile: project-engineer
+working_mode: production
+bootstrap_status: not-run
+review_status: not-reviewed
+confidence: not-assessed
+memory_health: not-checked
+git_advisory_state: not-checked
+last_successful_bootstrap: null
