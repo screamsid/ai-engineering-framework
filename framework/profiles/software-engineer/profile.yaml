@@ -1,0 +1,27 @@
+profile:
+  name: software-engineer
+  owner: framework
+  technology_agnostic: true
+  agent_may_select_profile: false
+
+framework_skills:
+  required:
+    - bootstrap-validation
+    - planning
+    - secure-coding
+    - testing
+    - documentation
+    - reviewing
+    - git
+    - workspace-hygiene
+    - promotion
+    - memory-management
+    - confidence-gates
+
+project_skills:
+  source: project-profile
+
+rules:
+  - Profiles compose skills; they do not implement engineering behaviour.
+  - Framework profiles must remain technology agnostic.
+  - Project-specific tools, products, libraries, and standards belong in project profiles.
