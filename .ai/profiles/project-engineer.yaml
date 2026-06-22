@@ -1,0 +1,53 @@
+profile:
+  name: project-engineer
+  owner: project
+  agent_may_select_profile: false
+  agent_may_modify_profile: false
+
+extends:
+  framework_profile: software-engineer
+
+project_context:
+  project_type: framework
+  primary_language: python
+  package_manager: pip
+  test_runner: pytest
+  formatter: not-declared
+  type_checker: not-declared
+  primary_domain: ai-engineering-governance
+
+project_structure:
+  production_code:
+    - runtime/
+    - framework/
+    - skills/
+  tests:
+    - tests/
+  documentation:
+    - docs/
+    - framework/
+  configuration:
+    - config/
+  ai_workspace:
+    - .ai/
+
+project_skills:
+  required:
+    - framework-runtime-maintenance
+  optional: []
+
+operating_rules:
+  - Framework profiles compose skills; they do not contain project-specific implementation.
+  - Bootstrap must remain a deterministic orchestrator.
+  - Skills perform engineering behaviour.
+  - Do not create placeholder architecture.
+
+validation_rules:
+  - Prefer automated tests where available.
+  - If tests cannot be run, explain why and provide manual validation steps.
+  - Review diffs before completion.
+
+memory_rules:
+  - Project memory is local to this repository.
+  - Do not sync project memory back into framework memory automatically.
+  - Promote learning to memory only after review and validation.
