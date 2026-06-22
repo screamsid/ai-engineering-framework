@@ -1,0 +1,114 @@
+version: 1
+
+project:
+  name: replace-with-project-name
+  framework_version: v0.5
+
+agent:
+  default_profile: project-engineer
+  response_style: concise
+  require_review: true
+  require_task_ledger_update: true
+  require_memory_review: true
+
+mode:
+  default: production
+  allowed:
+    - research
+    - sandbox
+    - prototype
+    - production
+    - maintenance
+
+profile:
+  file: .ai/project-profile.yaml
+  agent_may_select_profile: false
+  agent_may_modify_profile: false
+
+workspace:
+  durable_ai_paths:
+    - .ai/AGENTS.md
+    - .ai/bootstrap.yaml
+    - .ai/project-profile.yaml
+    - .ai/current-task.md
+    - .ai/task-ledger.md
+    - .ai/memory/project-memory.md
+  transient_ai_paths:
+    - .ai/scratch/
+    - .ai/cache/
+    - .ai/runs/
+    - .ai/tmp/
+    - .ai/sandbox/
+    - .ai/research/
+    - .ai/experiments/
+
+memory:
+  load:
+    - .ai/memory/project-memory.md
+  update_policy: validated-only
+  agent_may_create_memory_without_review: false
+  never_store:
+    - secrets
+    - credentials
+    - API tokens
+    - raw customer data
+    - raw API responses
+    - generated backups
+    - personal data
+
+skills:
+  framework:
+    - bootstrap
+    - planning
+    - git
+    - secure-coding
+    - testing
+    - documentation
+    - reviewing
+    - memory-management
+    - confidence-gates
+    - workspace-hygiene
+    - promotion
+  project:
+    source: .ai/project-profile.yaml
+
+git:
+  require_status_check_before_changes: true
+  require_feature_branch_for_production_changes: true
+  require_diff_review_before_completion: true
+  never_commit:
+    - .env
+    - .env.*
+    - secrets
+    - credentials
+    - raw-api-responses
+    - customer-data
+    - generated-backups
+    - .ai/scratch
+    - .ai/cache
+    - .ai/runs
+    - .ai/tmp
+    - .ai/sandbox
+    - .ai/research
+    - .ai/experiments
+
+confidence:
+  stop_below: 70
+  require_user_review_below: 90
+  allow_autonomous_documentation_changes_above: 90
+  allow_autonomous_code_changes_above: 95
+
+review:
+  required: true
+  reviewer_skill: reviewing
+  update_memory_after_review: true
+  update_task_ledger_after_review: true
+
+completion:
+  required_outputs:
+    - outcome_summary
+    - files_changed
+    - validation_performed
+    - confidence_rating
+    - memory_updates
+    - next_task
