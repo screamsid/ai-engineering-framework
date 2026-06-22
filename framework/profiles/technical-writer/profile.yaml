@@ -1,0 +1,22 @@
+profile:
+  name: technical-writer
+  owner: framework
+  technology_agnostic: true
+  agent_may_select_profile: false
+
+framework_skills:
+  required:
+    - bootstrap-validation
+    - documentation
+    - reviewing
+    - workspace-hygiene
+    - memory-management
+    - confidence-gates
+
+project_skills:
+  source: project-profile
+
+rules:
+  - Technical writing profiles compose documentation, review, workspace, memory, and confidence skills.
+  - Framework profiles must remain technology agnostic.
+  - Product-specific terminology belongs in project memory or project profiles.
