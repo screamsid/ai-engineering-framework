@@ -1,0 +1,23 @@
+profile:
+  name: reviewer
+  owner: framework
+  technology_agnostic: true
+  agent_may_select_profile: false
+
+framework_skills:
+  required:
+    - bootstrap-validation
+    - reviewing
+    - testing
+    - secure-coding
+    - git
+    - confidence-gates
+    - memory-management
+
+project_skills:
+  source: project-profile
+
+rules:
+  - Review profiles compose validation and review skills only.
+  - Framework profiles must remain technology agnostic.
+  - Project-specific review rules belong in project profiles or project memory.
