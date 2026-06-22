@@ -1,0 +1,78 @@
+version: 2
+
+project:
+  name: ai-engineering-framework
+  framework_version: v0.5
+
+agent:
+  profile: project-engineer
+  response_style: concise
+  require_review: true
+  require_task_ledger_update: true
+  require_memory_review: true
+  agent_may_select_profile: false
+
+mode:
+  default: maintenance
+  allowed:
+    - research
+    - sandbox
+    - prototype
+    - production
+    - maintenance
+
+profiles:
+  project_path: .ai/profiles
+  framework_path: framework/profiles
+  active: project-engineer
+
+bootstrap:
+  report: .ai/bootstrap-report.md
+  project_health: .ai/project-health.yaml
+  validation_skill: bootstrap-validation
+
+workspace:
+  durable_ai_paths:
+    - .ai/AGENTS.md
+    - .ai/bootstrap.yaml
+    - .ai/profiles/project-engineer.yaml
+    - .ai/current-task.md
+    - .ai/task-ledger.md
+    - .ai/memory/project-memory.md
+    - .ai/bootstrap-report.md
+    - .ai/project-health.yaml
+  transient_ai_paths:
+    - .ai/scratch/
+    - .ai/cache/
+    - .ai/runs/
+    - .ai/tmp/
+    - .ai/sandbox/
+    - .ai/research/
+    - .ai/experiments/
+
+memory:
+  load:
+    - .ai/memory/project-memory.md
+  update_policy: validated-only
+  agent_may_create_memory_without_review: false
+
+skills:
+  framework:
+    source: resolved-framework-profile
+  project:
+    source: resolved-project-profile
+
+git:
+  require_status_check_before_changes: true
+  require_feature_branch_for_production_changes: true
+  require_diff_review_before_completion: true
+
+confidence:
+  stop_below: 70
+  require_user_review_below: 90
+
+review:
+  required: true
+  reviewer_skill: reviewing
+  update_memory_after_review: true
+  update_task_ledger_after_review: true
