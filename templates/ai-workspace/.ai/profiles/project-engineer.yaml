@@ -1,0 +1,58 @@
+profile:
+  name: project-engineer
+  owner: project
+  agent_may_select_profile: false
+  agent_may_modify_profile: false
+
+extends:
+  framework_profile: software-engineer
+
+project_context:
+  project_type: replace-with-project-type
+  primary_language: replace-with-language
+  package_manager: replace-with-package-manager
+  test_runner: replace-with-test-runner
+  formatter: replace-with-formatter
+  type_checker: replace-with-type-checker
+  primary_domain: replace-with-domain
+
+project_structure:
+  production_code:
+    - src/
+  tests:
+    - tests/
+  documentation:
+    - docs/
+  configuration:
+    - config/
+  ai_workspace:
+    - .ai/
+
+project_skills:
+  required:
+    - replace-with-project-skill
+  optional: []
+
+operating_rules:
+  - Agents must follow `.ai/bootstrap.yaml` before making changes.
+  - Agents must use the working mode declared in `.ai/current-task.md`.
+  - Agents must not create project-specific rules in the framework repository.
+  - Agents must not create placeholder files or empty architecture.
+  - Agents must prefer the smallest complete usable change.
+
+security_rules:
+  - Sensitive values must come from environment variables or approved secret stores.
+  - Tests must not require production access by default.
+  - Raw external service responses must not be committed.
+  - Generated backups must not be committed unless sanitised and approved.
+
+validation_rules:
+  - Prefer automated tests where available.
+  - If tests cannot be run, explain why and provide manual validation steps.
+  - Review diffs before completion.
+
+memory_rules:
+  - Project memory is local to this project.
+  - Do not sync project memory back into the framework automatically.
+  - Promote learning to memory only after review and validation.
+  - Keep transient findings in `.ai/research/`, `.ai/sandbox/`, or `.ai/scratch/`.
