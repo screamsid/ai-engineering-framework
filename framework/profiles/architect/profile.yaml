@@ -1,0 +1,22 @@
+profile:
+  name: architect
+  owner: framework
+  technology_agnostic: true
+  agent_may_select_profile: false
+
+framework_skills:
+  required:
+    - bootstrap-validation
+    - planning
+    - documentation
+    - reviewing
+    - confidence-gates
+    - memory-management
+
+project_skills:
+  source: project-profile
+
+rules:
+  - Architecture profiles compose planning, documentation, review, confidence, and memory skills.
+  - Framework profiles must remain technology agnostic.
+  - Product, vendor, and implementation-specific architecture rules belong in project profiles.
